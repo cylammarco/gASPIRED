@@ -1,0 +1,3 @@
+._DS*
+*.pyc
+node_modules/*
