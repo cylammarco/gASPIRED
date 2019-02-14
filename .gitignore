@@ -1,3 +1,5 @@
-._DS*
+.DS*
+._*
 *.pyc
-node_modules/*
+node_modules
+out/
