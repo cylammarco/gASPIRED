@@ -14,7 +14,7 @@ cache:
 
 before_install:
    - if [ $TRAVIS_OS_NAME = linux ]; then wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -; fi
-   - if [ $TRAVIS_OS_NAME = linux ]; then 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'; fi
+   - if [ $TRAVIS_OS_NAME = linux ]; then 'deb https://dl.winehq.org/wine-builds/ubuntu/dists/trusty/main/binary-amd64/wine-stable-amd64_4.0~trusty_amd64.deb'; fi
    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install --install-recommends winehq-stable; fi
 
 addons:
