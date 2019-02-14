@@ -1,7 +1,7 @@
 {
   "name": "ASPIRED",
   "productName": "ASPIRED",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Automated SpectroPhotometric Image REDuction",
   "main": "src/index.js",
   "scripts": {
