@@ -1,4 +1,4 @@
-sudo: false
+sudo: enabled
 dist: trusty
 language: node_js
 node_js: "6"
@@ -12,6 +12,9 @@ cache:
     - node_modules
     - $HOME/.cache/electron
 
+before_install:
+  - wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+
 addons:
   brew:
     packages:
@@ -20,6 +23,7 @@ addons:
       - dpkg
       - wine
   apt:
+    update: true
     packages:
       - fakeroot
       - rpm
