@@ -30,8 +30,6 @@ addons:
       - fakeroot
       - rpm
       - dpkg
-      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'
-      - winehq-stable
 
 install:
   - npm install
