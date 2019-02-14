@@ -32,4 +32,4 @@ before_script:
 - sleep 5
 
 script:
-- electron-forge make --platform=linux,darwin,win32
+- electron-forge make --target=linux,darwin,win32
