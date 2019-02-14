@@ -13,11 +13,12 @@ cache:
     - $HOME/.cache/electron
 
 before_install:
-   - if [ $TRAVIS_OS_NAME = linux ]; then wget -qO - https://dl.winehq.org/wine-builds/winehq.key; fi
-   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-key add winehq.key; fi
-   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'; fi
-   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt update; fi
-   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install --install-recommends winehq-stable; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo dpkg --add-architecture i386 ; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then wget -nc https://dl.winehq.org/wine-builds/winehq.key; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-key add winehq.key; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt update; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install --install-recommends winehq-stable; fi
 
 addons:
   brew:
