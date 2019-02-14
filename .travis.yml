@@ -13,7 +13,9 @@ cache:
     - $HOME/.cache/electron
 
 before_install:
-  - wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+   - if [ $TRAVIS_OS_NAME = linux ]; then wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -; fi
+   - if [ $TRAVIS_OS_NAME = linux ]; then 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'; fi
+   - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install --install-recommends winehq-stable; fi
 
 addons:
   brew:
