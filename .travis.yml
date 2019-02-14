@@ -3,9 +3,7 @@ dist: trusty
 language: node_js
 node_js: "6"
 os:
-- linux
 - osx
-- win32
 osx_image: xcode8.3
 
 cache:
@@ -14,13 +12,12 @@ cache:
   - $HOME/.cache/electron
 
 addons:
-  apt:
+  brew:
     packages:
     - fakeroot
     - rpm
     - wine
     - dpkg
-    - squirrel
     - xvfb
 
 install:
