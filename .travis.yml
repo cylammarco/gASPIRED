@@ -17,14 +17,16 @@ addons:
     packages:
       - fakeroot
       - rpm
-      - wine
       - dpkg
+      - wine
   apt:
     packages:
       - fakeroot
       - rpm
       - wine64
       - dpkg
+      - sourceline: 'deb https://dl.winehq.org/wine-builds/ubuntu/ trusty main'
+      - winehq-stable
 
 install:
   - npm install
