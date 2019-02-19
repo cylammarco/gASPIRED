@@ -11,19 +11,20 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./heatmap.css">
+    <link rel="stylesheet" href="../node_modules/js9/js9-allinone.css">
 
   <!-- Scripts -->
   <script>
     var $ = require("../node_modules/jquery/dist/jquery.min.js");
     var jQuery = require("../node_modules/jquery/dist/jquery.min.js");
+    const path = require('path')
+    const spawn = require("child_process").spawn;
   </script>
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/solid.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
   <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
-  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="./heatmap.js"></script>
-
+  <script type="text/javascript" src="../node_modules/js9/js9-allinone.js"></script>
 </head>
 
 <body>
@@ -76,31 +77,152 @@
     <div id="content">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="navbar-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Note 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 4</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </nav>
+
       <div class="body">
+        
+        <div class="home">
+          <h2>OPTICON funded project - ASPIRED</h2>
+          <p>Automated SpectroPhotometric Image REDuction pipeline.</p>
+          <div class="line"></div>
+          <h2>Another Title</h2>
+          <p>Some words.</p>
+        </div>
+
+        <div class="imageScience">
+          <div>
+            <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load Image</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:pythonCall()">Test Python Script</button>
+          </div>
+          Order:
+          <select id="order">
+            <option value="null" selected> ----- </option>
+            <option value="minmax">MinMax</option>
+            <option value="zscale">Zscale</option>
+          </select>
+          Palette:
+          <select id="palette">
+            <option value="RdYlGn">RdYlGn</option>
+            <option value="Spectral" selected>Spectral</option>
+            <option value="RdYlBu">RdYlBu</option>
+            <option value="RdGy">RdGy</option>
+            <option value="RdBu">RdBu</option>
+            <option value="PiYG">PiYG</option>
+            <option value="PRGn">PRGn</option>
+            <option value="BrBG">BrBG</option>
+            <option value="PuOr">PuOr</option>
+          </select>
+          <!--
+          <div id="heatmap"></div>
+          -->
+          <div class="JS9Menubar" data-width="1000px"></div>
+          <div class="JS9" data-width="1000px" data-height="400px"></div>
+        </div>
+
+
       </div>
+
     </div>
   </div>
 
   <script type="text/javascript">
     $(document).ready(function() {
 
-      $('#content .body').load("home.html");
-
-      $('.navbar').load("topbar.html").delegate(
-        '#sidebarCollapse', 'click', function () {
-        $('#sidebar').toggleClass('active');
-        $(this).toggleClass('active');
+      $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
+          $(this).toggleClass('active');
       });
 
-      $('#home').on('click', function() {
-        $('#content .body').load("home.html");
-      });
-
-      $('#imageScience').on('click', function() {
-        $('#content .body').load("imageScience.html");
-      });
     });
+
+    JS9.globalOpts.mouseActions[0] = "display value/position";
+    JS9.globalOpts.mouseActions[1] = "pan the image";
+    JS9.globalOpts.mouseActions[2] = "change contrast/bias";
+    JS9.globalOpts.mouseActions[3] = "zoom";
+    JS9.globalOpts.touchActions[0] = "display value/position";
+    JS9.globalOpts.touchActions[1] = "pan the image";
+    JS9.globalOpts.touchActions[2] = "change contrast/bias";
+    JS9.globalOpts.touchActions[3] = "zoom";
+    JS9.globalOpts.clearImageMemory = "auto";
+    JS9.globalOpts.mousetouchZoom = "true";
+
+    var imgOpts = {
+      scale: "log",
+      zoom: "1.0",
+      colormap: "grey"
+    };
+
+    JS9.textColorOpts = {
+      regions: "#C7D401",
+      info: "#C7D401",
+      inimage: "#000000"
+    };
+
+    function loadFITS() {
+      JS9.Load(__dirname + '/FITS_example/example.fits', imgOpts);
+      /*
+      if (typeof input === 'string') {
+        console.log(input);
+        d3.json(input).then( function(data) {
+          heatmap_display(data, "#heatmap", "Spectral");
+        })
+      } else if (typeof input === 'object') {
+        heatmap_display(input, "#heatmap", "Spectral");
+      }
+      */
+    }
+      
+    function pythonCall() {
+
+      const pythonProcess = spawn('python3', [path.join(__dirname, '/testing.py')])
+      /*
+      var result = '';
+      pythonProcess.stdout.on('data', (data) => {
+      // Do something with the data returned from python script
+        result += data.toString();
+        //console.log(data);
+      });
+
+      pythonProcess.stdout.on('close', (data) => {
+        try {
+          // If JSON handle the data
+          console.log(JSON.parse(result));
+          heatmap_display(JSON.parse(result), "#heatmap", "Spectral");
+        } catch (e) {
+          // Otherwise treat as a log entry
+          console.log(e);
+        }
+      });
+      */
+    }
+
   </script>
 
 </body>
