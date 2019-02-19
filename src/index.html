@@ -10,16 +10,20 @@
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./heatmap.css">
 
   <!-- Scripts -->
   <script>
     var $ = require("../node_modules/jquery/dist/jquery.min.js");
     var jQuery = require("../node_modules/jquery/dist/jquery.min.js");
   </script>
-  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/solid.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
   <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="../node_modules/d3/dist/d3.min.js"></script>
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="./heatmap.js"></script>
+
 </head>
 
 <body>
@@ -29,91 +33,72 @@
           <h3>ASPIRED</h3>
       </div>
       <ul class="list-unstyled components">
-        <li class="active">
-          <a href='#'>Home</a>
+        <li>
+          <a id='home'>Home</a>
         </li>
         <li>
-          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Images</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
+          <a href="#imageSubmenu" data-toggle="collapse" class="dropdown-toggle">Images</a>
+            <!-- The <<href="#imageSubmenu">> has to match <<id="imageSubmenu">> -->
+          <ul class="collapse list-unstyled show" id="imageSubmenu">
             <li>
-              <a href="#">Science</a>
+              <a id="imageScience">Science</a>
             </li>
             <li>
-              <a href="#">Standard</a>
+              <a id="imageStandard">Standard</a>
             </li>
             <li>
-              <a href="#">Dark</a>
+              <a id="imageDark">Dark</a>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Identify Spectrum</a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
+          <a href="#identifySubmenu" data-toggle="collapse" class="dropdown-toggle">Identify Spectrum</a>
+          <ul class="collapse list-unstyled show" id="identifySubmenu">
+            <!-- The <<href="#identifySubmenu">> has to match <<id="identifySubmenu">> -->
             <li>
-              <a href="#">Science</a>
+              <a id="identifyScience">Science</a>
             </li>
             <li>
-              <a href="#">Standard</a>
+              <a id="identifyStandard">Standard</a>
             </li>
           </ul>
         </li>
         <li>
-          <a href="#">Extract Spectrum</a>
+          <a id="extract">Extract Spectrum</a>
         </li>
         <li>
-          <a href="#">Wavelength Calibration</a>
+          <a id="waveCal">Wavelength Calibration</a>
         </li>
       </ul>
     </nav>
+
     <!-- Page Content Holder -->
     <div id="content">
+
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <button type="button" id="sidebarCollapse" class="navbar-btn">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-
-          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-align-justify"></i>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Note 1</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Note 2</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Note 3</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Note 4</a>
-              </li>
-            </ul>
-          </div>
-
-        </div>
       </nav>
-
-        <h2>OPTICON funded project - ASPIRED</h2>
-        <p>Automated SpectroPhotometric Image REDuction pipeline.</p>
-
-        <div class="line"></div>
-
-        <h2>Another Title</h2>
-        <p>Some words.</p>
-
+      <div class="body">
+      </div>
     </div>
   </div>
 
   <script type="text/javascript">
-    $(document).ready(function () {
-      $('#sidebarCollapse').on('click', function () {
+    $(document).ready(function() {
+
+      $('#content .body').load("home.html");
+
+      $('.navbar').load("topbar.html").delegate(
+        '#sidebarCollapse', 'click', function () {
         $('#sidebar').toggleClass('active');
         $(this).toggleClass('active');
+      });
+
+      $('#home').on('click', function() {
+        $('#content .body').load("home.html");
+      });
+
+      $('#imageScience').on('click', function() {
+        $('#content .body').load("imageScience.html");
       });
     });
   </script>
