@@ -1,6 +1,9 @@
 import { app, BrowserWindow } from 'electron';
 const path = require('path')
 const url = require('url')
+const fixPath = require('fix-path');
+
+fixPath();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -52,9 +55,12 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
+  //if (process.platform !== 'darwin') {
+
+    // Clear cache
+    //mainWindow.webContents.session.clearCache();
     app.quit();
-  }
+  //}
 });
 
 app.on('activate', () => {

@@ -2,29 +2,40 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" > 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>ASPIRED</title>
+
 
   <!-- Stylesheets -->
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="./heatmap.css">
-    <link rel="stylesheet" href="../node_modules/js9/js9-allinone.css">
+    <link rel="stylesheet" href="../node_modules/js9/js9support.css">
+    <link rel="stylesheet" href="../node_modules/js9/js9.css">
 
   <!-- Scripts -->
   <script>
     var $ = require("../node_modules/jquery/dist/jquery.min.js");
     var jQuery = require("../node_modules/jquery/dist/jquery.min.js");
-    const path = require('path')
-    const spawn = require("child_process").spawn;
+    const path = require('path');
+    const exec = require("child_process").exec;
+    const filesystem = require("fs");
   </script>
   <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/solid.min.js"></script>
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
   <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="../node_modules/js9/js9-allinone.js"></script>
+  <script type="text/javascript" src="./myjs9prefs.js"></script>
+  <script type="text/javascript" src="../node_modules/js9/js9support.js"></script>
+  <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
+  <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
+  <!--       <script type="text/javascript" src="../node_modules/js9/js9-allinone.js"></script>  -->
+  <script type="text/javascript" src="../node_modules/js9/js9usermenus.js"></script>
+
 </head>
 
 <body>
@@ -118,8 +129,9 @@
 
         <div class="imageScience">
           <div>
-            <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load Image</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:pythonCall()">Test Python Script</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load FITS</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:pythonCall()">Identify Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:addPoint()">Add Region (Circle)</button>
           </div>
           Order:
           <select id="order">
@@ -143,6 +155,7 @@
           <div id="heatmap"></div>
           -->
           <div class="JS9Menubar" data-width="1000px"></div>
+          <p></p>
           <div class="JS9" data-width="1000px" data-height="400px"></div>
         </div>
 
@@ -185,42 +198,61 @@
       inimage: "#000000"
     };
 
-    function loadFITS() {
-      JS9.Load(__dirname + '/FITS_example/example.fits', imgOpts);
-      /*
-      if (typeof input === 'string') {
-        console.log(input);
-        d3.json(input).then( function(data) {
-          heatmap_display(data, "#heatmap", "Spectral");
-        })
-      } else if (typeof input === 'object') {
-        heatmap_display(input, "#heatmap", "Spectral");
-      }
-      */
+    function addPoint() {
+        JS9.AddRegions('circle');
     }
-      
+
+    function loadFITS() {
+      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
+    }
+
+    function getSpecPosition() {
+      var regions = JS9.GetRegions();
+      if (regions.length < 2) {
+        window.alert("At least 2 points have to be specified for manual spectral fitting.");
+      }
+      var x = [];
+      var y = [];
+      for (var i=0; i<regions.length; i++) {
+        x.push(regions[i].x);
+        y.push(regions[i].y);
+      };
+      return {x, y};
+    }
+
     function pythonCall() {
+      
+      var spec = JS9.images[0].raw;
+      
+      filesystem.writeFile(path.join(__dirname, 'testing_with_motty.txt'), JSON.stringify(spec), (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
 
-      const pythonProcess = spawn('python3', [path.join(__dirname, '/testing.py')])
-      /*
-      var result = '';
-      pythonProcess.stdout.on('data', (data) => {
-      // Do something with the data returned from python script
-        result += data.toString();
-        //console.log(data);
-      });
+        let result = '';
+        let pythonProcess = exec('python3 ' + path.join(__dirname, 'testing.py') + ' ' + path.join(__dirname, 'testing_with_motty.txt'));
+        //console.log(pythonProcess);
+        pythonProcess.stdout.on('data', function(data) {
+        // Do something with the data returned from python script
+          //console.log(data);
+          result += data;
+        });
 
-      pythonProcess.stdout.on('close', (data) => {
-        try {
-          // If JSON handle the data
-          console.log(JSON.parse(result));
-          heatmap_display(JSON.parse(result), "#heatmap", "Spectral");
-        } catch (e) {
-          // Otherwise treat as a log entry
-          console.log(e);
-        }
+        pythonProcess.stdout.on('end', function() {
+        // Do something with the data returned from python script
+          result = JSON.parse(result);
+          for (var i=0; i<result.length; i++) {
+              //console.log(i, result[i][i])
+              JS9.AddRegions('circle', {x:i, y:result[i][i], radius:1});
+          }
+          console.log("Done!");
+        });
+
+        pythonProcess.on('exit', function (code, signal) {
+          console.log('child process exited with ' +
+                      `code ${code} and signal ${signal}`);
+        });
+
       });
-      */
     }
 
   </script>
