@@ -1,5 +1,5 @@
 .DS*
 ._*
 *.pyc
-
-
+node_modules/
+package-lock.json
