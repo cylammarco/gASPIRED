@@ -1,11 +1,11 @@
 .DS*
 ._*
 *.pyc
-node_modules
 out/
-package-lock.json
 src/testing_with_motty.txt
 src/spec_input_manual.txt
 src/build/
 src/dist/
 src/pages/
+node_modules/
+package-lock.json
