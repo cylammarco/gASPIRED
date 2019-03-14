@@ -4,3 +4,4 @@
 node_modules
 out/
 package-lock.json
+src/testing_with_motty.txt
