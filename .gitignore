@@ -3,3 +3,10 @@
 *.pyc
 node_modules/
 package-lock.json
+src/.eggs
+src/__pycache__
+src/build
+src/dist
+src/pages/__pycache__
+src/pages/migrations
+src/PyBrowse/__pycache__

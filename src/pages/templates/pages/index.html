@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" > 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ASPIRED</title>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="./heatmap.css">-->
+  {% load static from staticfiles %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+  <link rel="stylesheet" href="{% static 'js9/js9support.css' %}">
+  <link rel="stylesheet" href="{% static 'js9/js9.css' %}">
+
+  <!-- Scripts -->
+  <script>
+    // Call back to require packages otherwise they start loading before requirejs is loaded.
+    define(function (require) {
+      var $ = require("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js");
+      var jQuery = require("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js");
+      //var path = require('path');
+      //var exec = require("child_process").exec;
+      //var fs = require("fs");
+    });
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/js/solid.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    var JS9Prefs = {
+      "globalOpts": {
+        "helperType":       "none",
+        "helperPort":       2718, 
+        "helperCGI":        "./cgi-bin/js9/js9Helper.cgi",
+        "fits2png":         false,
+        "debug":            1,
+        "loadProxy":        true,
+        "workDir":          "./tmp",
+        "workDirQuota":     10000,
+        "dataPath":         "$HOME/Desktop:$HOME/data",
+        "analysisPlugins":  "./analysis-plugins",
+        "analysisWrappers": "./analysis-wrappers"
+      },
+      "imageOpts":  {
+        "colormap":         "grey",
+        "scale":            "log"
+      }
+    }
+  </script>
+  <script type="text/javascript" src="{% static 'js9/js9support.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js9/js9.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js9/js9plugins.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js9/js9usermenus.js' %}"></script>
+
+</head>
+
+<body>
+  <div class="wrapper">
+    <nav id="sidebar">
+      <div class="sidebar-header">
+          <h3>ASPIRED</h3>
+      </div>
+      <ul class="list-unstyled components">
+        <li>
+          <a id='home'>Home</a>
+        </li>
+        <li>
+          <a href="#imageSubmenu" data-toggle="collapse" class="dropdown-toggle">Images</a>
+            <!-- The <<href="#imageSubmenu">> has to match <<id="imageSubmenu">> -->
+          <ul class="collapse list-unstyled show" id="imageSubmenu">
+            <li>
+              <a id="imageScience">Science</a>
+            </li>
+            <li>
+              <a id="imageStandard">Standard</a>
+            </li>
+            <li>
+              <a id="imageDark">Dark</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#identifySubmenu" data-toggle="collapse" class="dropdown-toggle">Identify Spectrum</a>
+          <ul class="collapse list-unstyled show" id="identifySubmenu">
+            <!-- The <<href="#identifySubmenu">> has to match <<id="identifySubmenu">> -->
+            <li>
+              <a id="identifyScience">Science</a>
+            </li>
+            <li>
+              <a id="identifyStandard">Standard</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a id="extract">Extract Spectrum</a>
+        </li>
+        <li>
+          <a id="waveCal">Wavelength Calibration</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="navbar-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Note 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Note 4</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="body">
+        
+        <div class="home">
+          <h2>OPTICON funded project - ASPIRED</h2>
+          <p>Automated SpectroPhotometric Image REDuction pipeline.</p>
+          <div class="line"></div>
+          <h2>Another Title</h2>
+          <p>Some words.</p>
+        </div>
+
+        <div class="imageScience">
+          <div>
+            <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load FITS</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:pythonCall()">Identify Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:addPoint()">Add Region (Circle)</button>
+          </div>
+          Order:
+          <select id="order">
+            <option value="null" selected> ----- </option>
+            <option value="minmax">MinMax</option>
+            <option value="zscale">Zscale</option>
+          </select>
+          Palette:
+          <select id="palette">
+            <option value="RdYlGn">RdYlGn</option>
+            <option value="Spectral" selected>Spectral</option>
+            <option value="RdYlBu">RdYlBu</option>
+            <option value="RdGy">RdGy</option>
+            <option value="RdBu">RdBu</option>
+            <option value="PiYG">PiYG</option>
+            <option value="PRGn">PRGn</option>
+            <option value="BrBG">BrBG</option>
+            <option value="PuOr">PuOr</option>
+          </select>
+          <!--
+          <div id="heatmap"></div>
+          -->
+          <div class="JS9Menubar" data-width="1000px"></div>
+          <p></p>
+          <div class="JS9" data-width="1000px" data-height="400px"></div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+{% csrf_token %}
+  <script type="text/javascript">
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+    $(document).ready(function() {
+      $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
+          $(this).toggleClass('active');
+      });
+    });
+    JS9.globalOpts.mouseActions[0] = "display value/position";
+    JS9.globalOpts.mouseActions[1] = "pan the image";
+    JS9.globalOpts.mouseActions[2] = "change contrast/bias";
+    JS9.globalOpts.mouseActions[3] = "zoom";
+    JS9.globalOpts.touchActions[0] = "display value/position";
+    JS9.globalOpts.touchActions[1] = "pan the image";
+    JS9.globalOpts.touchActions[2] = "change contrast/bias";
+    JS9.globalOpts.touchActions[3] = "zoom";
+    JS9.globalOpts.clearImageMemory = "auto";
+    JS9.globalOpts.mousetouchZoom = "true";
+    var imgOpts = {
+      scale: "log",
+      zoom: "1.0",
+      colormap: "grey"
+    };
+    JS9.textColorOpts = {
+      regions: "#C7D401",
+      info: "#C7D401",
+      inimage: "#000000"
+    };
+    function addPoint() {
+        JS9.AddRegions('circle');
+    }
+    function loadFITS() {
+      JS9.Load("{% static 'example_sprat_flattened.fits' %}");
+    }
+    function getSpecPosition() {
+      var regions = JS9.GetRegions();
+      if (regions.length < 2) {
+        window.alert("At least 2 points have to be specified for manual spectral fitting.");
+      }
+      var x = [];
+      var y = [];
+      for (var i=0; i<regions.length; i++) {
+        x.push(regions[i].x);
+        y.push(regions[i].y);
+      };
+      return {x, y};
+    }
+    function pythonCall() {
+      
+      var spec = JS9.images[0].raw;
+
+      var aptraced = jQuery.post(
+        '/pages/aptrace',
+        JSON.stringify(spec),
+        function(result, status, xhr) {
+          console.log(result);
+          //result = JSON.parse(result.content);
+          for (var i=0; i<result.length; i++) {
+              //console.log(i, result[i][i])
+              JS9.AddRegions('circle', {x:i, y:result[i][i], radius:1});
+          }
+        },
+        "json"
+      );
+
+      console.log(aptraced);
+/*
+      fs.writeFile(path.join(__dirname, 'testing_with_motty.txt'), JSON.stringify(spec), (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+        let result = '';
+        let pythonProcess = exec('python3 ' + path.join(__dirname, 'testing.py') + ' ' + path.join(__dirname, 'testing_with_motty.txt'));
+        //console.log(pythonProcess);
+        pythonProcess.stdout.on('data', function(data) {
+        // Do something with the data returned from python script
+          //console.log(data);
+          result += data;
+        });
+        pythonProcess.stdout.on('end', function() {
+        // Do something with the data returned from python script
+          result = JSON.parse(result);
+          for (var i=0; i<result.length; i++) {
+              //console.log(i, result[i][i])
+              JS9.AddRegions('circle', {x:i, y:result[i][i], radius:1});
+          }
+          console.log("Done!");
+        });
+        pythonProcess.on('exit', function (code, signal) {
+          console.log('child process exited with ' +
+                      `code ${code} and signal ${signal}`);
+        });
+      });
+      */
+    }
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+
+      function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+
+      jQuery.ajaxSetup({
+          beforeSend: function(xhr, settings) {
+              if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                  xhr.setRequestHeader("X-CSRFToken", csrftoken);
+              }
+          }
+      });
+
+  </script>
+
+</body>
+
+</html>
