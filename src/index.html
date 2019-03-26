@@ -33,7 +33,6 @@
   <script type="text/javascript" src="../node_modules/js9/js9support.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
-  <!--       <script type="text/javascript" src="../node_modules/js9/js9-allinone.js"></script>  -->
   <script type="text/javascript" src="../node_modules/js9/js9usermenus.js"></script>
 
 </head>
@@ -130,8 +129,10 @@
         <div class="imageScience">
           <div>
             <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load FITS</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:pythonCall()">Identify Spectrum</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:addPoint()">Add Region (Circle)</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:specPosition('auto')">Identify Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:addBox()">Mark Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:specPosition('manual')">Identify Marked Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:JS9.RemoveRegions()">Remove All Markers</button>
           </div>
           Order:
           <select id="order">
@@ -198,38 +199,45 @@
       inimage: "#000000"
     };
 
-    function addPoint() {
-        JS9.AddRegions('circle');
+    function addBox() {
+        JS9.AddRegions('box', {height: 20});
     }
 
     function loadFITS() {
       JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
     }
 
-    function getSpecPosition() {
-      var regions = JS9.GetRegions();
-      if (regions.length < 2) {
-        window.alert("At least 2 points have to be specified for manual spectral fitting.");
-      }
-      var x = [];
-      var y = [];
-      for (var i=0; i<regions.length; i++) {
-        x.push(regions[i].x);
-        y.push(regions[i].y);
-      };
-      return {x, y};
-    }
+    function specPosition(mode) {
 
-    function pythonCall() {
-      
-      var spec = JS9.images[0].raw;
-      
-      filesystem.writeFile(path.join(__dirname, 'testing_with_motty.txt'), JSON.stringify(spec), (err) => {
+      var spectrum = JS9.images[0].raw,
+        spec_width = spectrum.header.NAXIS1,
+        spec_height = spectrum.header.NAXIS2;
+
+      if (mode == 'manual') {
+        var box = JS9.GetRegions('box')[0],
+          box_center = box.y,
+          box_height = box.height,
+          spec_low = box_center - box_height / 2.,
+          spec_high = box_center + box_height / 2.;
+      } else {
+        var spec_low = 5,
+          spec_high = spec_height - 5;        
+      }
+
+      var tempfile_name = 'spec_input_' + mode + '.txt'
+
+      var start_pix = spec_low * spec_width,
+        end_pix = spec_high * spec_width,
+        spec_data = spectrum.data.slice(start_pix, end_pix);
+
+      var new_spec_height = spec_high-spec_low;
+
+      filesystem.writeFile(path.join(__dirname, tempfile_name), JSON.stringify(spec_data), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
 
         let result = '';
-        let pythonProcess = exec('python3 ' + path.join(__dirname, 'testing.py') + ' ' + path.join(__dirname, 'testing_with_motty.txt'));
+        let pythonProcess = exec('python3 ' + path.join(__dirname, 'apIdentify.py') + ' ' + path.join(__dirname, tempfile_name) + ' ' + spec_width + ' ' + new_spec_height);
         //console.log(pythonProcess);
         pythonProcess.stdout.on('data', function(data) {
         // Do something with the data returned from python script
@@ -242,7 +250,7 @@
           result = JSON.parse(result);
           for (var i=0; i<result.length; i++) {
               //console.log(i, result[i][i])
-              JS9.AddRegions('circle', {x:i, y:result[i][i], radius:1});
+              JS9.AddRegions('point', {x:i, y:result[i][i] + spec_low, radius:1});
           }
           console.log("Done!");
         });
