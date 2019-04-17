@@ -8,32 +8,23 @@
 
   <title>ASPIRED</title>
 
-
   <!-- Stylesheets -->
-    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./heatmap.css">
-    <link rel="stylesheet" href="../node_modules/js9/js9support.css">
-    <link rel="stylesheet" href="../node_modules/js9/js9.css">
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="node_modules/js9/js9support.css">
+  <link rel="stylesheet" href="node_modules/js9/js9.css">
 
   <!-- Scripts -->
-  <script>
-    var $ = require("../node_modules/jquery/dist/jquery.min.js");
-    var jQuery = require("../node_modules/jquery/dist/jquery.min.js");
-    const path = require('path');
-    const exec = require("child_process").exec;
-    const filesystem = require("fs");
-  </script>
-  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/solid.min.js"></script>
-  <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
-  <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="node_modules/@fortawesome/fontawesome-free/js/solid.min.js"></script>
+  <script type="text/javascript" src="node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
+  <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="./myjs9prefs.js"></script>
-  <script type="text/javascript" src="../node_modules/js9/js9support.js"></script>
-  <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
-  <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
-  <script type="text/javascript" src="../node_modules/js9/js9usermenus.js"></script>
+  <script type="text/javascript" src="node_modules/js9/js9support.js"></script>
+  <script type="text/javascript" src="node_modules/js9/js9.js"></script>
+  <script type="text/javascript" src="node_modules/js9/js9plugins.js"></script>
+  <script type="text/javascript" src="node_modules/js9/js9usermenus.js"></script>
 
 </head>
 
@@ -204,7 +195,7 @@
     }
 
     function loadFITS() {
-      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
+      JS9.Load('FITS_example/example_sprat_flattened.fits');
     }
 
     function specPosition(mode) {
@@ -224,44 +215,35 @@
           spec_high = spec_height - 5;        
       }
 
-      var tempfile_name = 'spec_input_' + mode + '.txt'
+      var tempfile_name = 'spec_input_' + mode + '.txt';
 
       var start_pix = spec_low * spec_width,
         end_pix = spec_high * spec_width,
         spec_data = spectrum.data.slice(start_pix, end_pix);
 
+      var spec_data_3sf = [];
+      for (i=0; i<spec_data.length; i++) {
+        spec_data_3sf.push(spec_data[i].toFixed(3));
+      }
+      console.log(spec_data_3sf);
+      spec_data_3sf = JSON.stringify(spec_data_3sf);
+      console.log(spec_data_3sf);
       var new_spec_height = spec_high-spec_low;
 
-      filesystem.writeFile(path.join(__dirname, tempfile_name), JSON.stringify(spec_data), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-
-        let result = '';
-        let pythonProcess = exec('python3 ' + path.join(__dirname, 'apIdentify.py') + ' ' + path.join(__dirname, tempfile_name) + ' ' + spec_width + ' ' + new_spec_height);
-        //console.log(pythonProcess);
-        pythonProcess.stdout.on('data', function(data) {
-        // Do something with the data returned from python script
-          //console.log(data);
-          result += data;
-        });
-
-        pythonProcess.stdout.on('end', function() {
-        // Do something with the data returned from python script
-          result = JSON.parse(result);
-          for (var i=0; i<result.length; i++) {
-              //console.log(i, result[i][i])
-              JS9.AddRegions('point', {x:i, y:result[i][i] + spec_low, radius:1});
+      // http post here
+      $.post("/my_aptrace", {spec_data_3sf, spec_width, new_spec_height, tempfile_name}, function(response) {
+          //console.log('posted');
+          //console.log(response);
+          //First function handles success
+          for (var i=0; i<response.length; i++) {
+            //console.log(i, result[i][i])
+            JS9.AddRegions('point', {x:i, y:response[i][i] + spec_low,radius:1});
           }
-          console.log("Done!");
+        //console.log(response.data);
         });
+      };
 
-        pythonProcess.on('exit', function (code, signal) {
-          console.log('child process exited with ' +
-                      `code ${code} and signal ${signal}`);
-        });
 
-      });
-    }
 
   </script>
 

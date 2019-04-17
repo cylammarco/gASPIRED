@@ -5,14 +5,14 @@ var JS9Prefs = {
     "helperCGI":        "./cgi-bin/js9/js9Helper.cgi",
     "fits2png":         false,
     "debug":            1,
-    "loadProxy":        true,
+    "loadProxy":        false,
     "workDir":          "./tmp",
-    "workDirQuota":     10000,
+    "workDirQuota":     10000000,
     "dataPath":         "$HOME/Desktop:$HOME/data",
     "analysisPlugins":  "./analysis-plugins",
     "analysisWrappers": "./analysis-wrappers"
   },
-  "installDir":         "../node_modules/js9",
+  "installDir":         "public/node_modules/js9",
   "imageOpts":  {
     "colormap":         "grey",
     "scale":            "log"

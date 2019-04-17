@@ -17,7 +17,7 @@ img = np.zeros((y_len, x_len))
 
 x = 0
 y = 0
-for key, value in data.items():
+for key, value in enumerate(data):
     img[y][x] = value
     x += 1
     if (x%x_len == 0):
