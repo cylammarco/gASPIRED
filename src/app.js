@@ -12,7 +12,8 @@ var app = express();
 var engines = require('consolidate');
 
 app.use(bodyParser.json({limit: '10mb'}));
-app.use(bodyParser.urlencoded({limit: '10mb', parameterLimit: 1000000, extended: true}));
+//app.use(bodyParser.urlencoded({limit: '10mb', parameterLimit: 1000000, extended: true}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(compression());
 
 // view engine setup
