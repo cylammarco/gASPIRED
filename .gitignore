@@ -10,3 +10,4 @@ src/dist
 src/pages/__pycache__
 src/pages/migrations
 src/PyBrowse/__pycache__
+out/

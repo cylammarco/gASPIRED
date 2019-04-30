@@ -19,17 +19,13 @@ else:
 
 # set up logging and app_name
 if run_as_binary is True:
-    log_file = os.path.join(base_dir, "..", "PyBrowse.log")
-    cherry_access_log = os.path.join(base_dir, "..", "access.log")
-    cherry_error_log = os.path.join(base_dir, "..", "error.log")
-    app_name = "PyBrowse"
+    log_file = os.path.join(base_dir, "..", "ASPIRED.log")
+    app_name = "ASPIRED"
 else:
-    log_file = os.path.join(base_dir, "PyBrowse.log")
-    cherry_access_log = os.path.join(base_dir, "access.log")
-    cherry_error_log = os.path.join(base_dir, "error.log")
-    app_name = "Python"
+    log_file = os.path.join(base_dir, "ASPIRED.log")
+    app_name = "ASPIRED"
 
-log = logging.getLogger("PyBrowse")
+log = logging.getLogger("ASPIRED")
 log.setLevel(logging.DEBUG)
 handler = logging.handlers.RotatingFileHandler(log_file,
                                                maxBytes=30000000,
@@ -59,5 +55,5 @@ system_feedback = subprocess.Popen([
     close_fds=True).communicate()[0].rstrip().decode("utf-8")
 
 # Create a resizable webview window with 800x600 dimensions
-webview.create_window("PyBrowse", "http://" + ip + ":" + port + "/pages/", width=1024,
+webview.create_window("ASPIRED", "http://" + ip + ":" + port + "/pages/", width=1024,
                        height=768, resizable=True, fullscreen=False, debug=True)

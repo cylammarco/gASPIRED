@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'PyBrowse.urls'
+ROOT_URLCONF = 'ASPIRED.urls'
 
 TEMPLATES = [
     {
@@ -66,7 +66,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'PyBrowse.wsgi.application'
+WSGI_APPLICATION = 'ASPIRED.wsgi.application'
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 524288000
 
