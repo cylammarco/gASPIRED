@@ -9,3 +9,7 @@ src/dist/
 src/pages/
 node_modules/
 package-lock.json
+out/*
+src/build/
+src/dist/
+src/pages/
