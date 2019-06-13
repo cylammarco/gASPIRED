@@ -410,6 +410,7 @@ def ap_trace(img, nsteps=20, spatial_mask=(1, ), spec_mask=(1, ),
             print('Spectrum ' + str(i+1) + ' : Trace gaussian width = ' +
                   str(ybins_sigma) + ' pixels')
 
+
     if display:
         ax1.legend()
         ax1.grid()
