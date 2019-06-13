@@ -19,6 +19,7 @@
 
   <!-- Scripts -->
   <script>
+    var pyshell =  require('python-shell').PythonShell;
     var $ = require("../node_modules/jquery/dist/jquery.min.js");
     var jQuery = require("../node_modules/jquery/dist/jquery.min.js");
     const path = require('path');
@@ -34,6 +35,7 @@
   <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9usermenus.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 </head>
 
@@ -129,9 +131,9 @@
         <div class="imageScience">
           <div>
             <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load FITS</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:specPosition('auto')">Identify Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:specTrace('auto')">Identify Spectrum</button>
             <button type="button" class="btn btn-primary" onclick="javascript:addBox()">Mark Spectrum</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:specPosition('manual')">Identify Marked Spectrum</button>
+            <button type="button" class="btn btn-primary" onclick="javascript:specTrace('manual')">Identify Marked Spectrum</button>
             <button type="button" class="btn btn-primary" onclick="javascript:JS9.RemoveRegions()">Remove All Markers</button>
           </div>
           Order:
@@ -154,12 +156,18 @@
           </select>
           <!--
           <div id="heatmap"></div>
-          -->
           <div class="JS9Menubar" data-width="1000px"></div>
+          -->
           <p></p>
           <div class="JS9" data-width="1000px" data-height="400px"></div>
         </div>
+        <div>
+           <button type="button" class="btn btn-primary" onclick="javascript:specExtract()">Extract Spectrum</button>
+        </div>
+        <div class="line"></div>
 
+        <div class="extractedSpectrum">
+        </div>
 
       </div>
 
@@ -200,68 +208,123 @@
     };
 
     function addBox() {
-        JS9.AddRegions('box', {height: 20});
+      var spec_width = JS9.images[0].raw.header.NAXIS1;
+        JS9.AddRegions('box', {height: 25, width: spec_width});
     }
 
     function loadFITS() {
       JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
     }
 
-    function specPosition(mode) {
+    var myTrace;
+    function specTrace(mode) {
 
       var spectrum = JS9.images[0].raw,
-        spec_width = spectrum.header.NAXIS1,
-        spec_height = spectrum.header.NAXIS2;
+          spec_width = spectrum.header.NAXIS1,
+          spec_height = spectrum.header.NAXIS2;
 
+      var trace = '';
+      let shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text'});
+      shell.send(JSON.stringify(spectrum));
+      
+      // append the stdout messages
+      shell.on('message', function(message) {
+        trace += message;
+      });
+      
+      // convert into JSON object when all messages are received
+      shell.end(function(err) {
+        if (err) console.log(err);
+        myTrace = JSON.parse(trace);
+        
+        //console.log(trace[0][0]['mu']+1);
+        // plot the trace
+        for (var i=0; i<myTrace.length; i++) {
+            JS9.AddRegions('point', {x:i+1, y:myTrace[i][i]['mu']+1, radius:1});
+        }
+      });
+/*
       if (mode == 'manual') {
         var box = JS9.GetRegions('box')[0],
           box_center = box.y,
           box_height = box.height,
           spec_low = box_center - box_height / 2.,
           spec_high = box_center + box_height / 2.;
-      } else {
-        var spec_low = 5,
-          spec_high = spec_height - 5;        
       }
-
-      var tempfile_name = 'spec_input_' + mode + '.txt'
 
       var start_pix = spec_low * spec_width,
         end_pix = spec_high * spec_width,
         spec_data = spectrum.data.slice(start_pix, end_pix);
 
       var new_spec_height = spec_high-spec_low;
+*/
+    }
 
-      filesystem.writeFile(path.join(__dirname, tempfile_name), JSON.stringify(spec_data), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
+    var spec = '';
+    function specExtract(mode) {
+      var spectrum = JS9.images[0].raw,
+          spec_width = spectrum.header.NAXIS1,
+          spec_height = spectrum.header.NAXIS2,
+          spec_temp = '';
 
-        let result = '';
-        let pythonProcess = exec('python3 ' + path.join(__dirname, 'apIdentify.py') + ' ' + path.join(__dirname, tempfile_name) + ' ' + spec_width + ' ' + new_spec_height);
-        //console.log(pythonProcess);
-        pythonProcess.stdout.on('data', function(data) {
-        // Do something with the data returned from python script
-          //console.log(data);
-          result += data;
-        });
+      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text'});
+      shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myTrace}));
+      
+      // append the stdout messages
+      shell.on('message', function(message) {
+        spec_temp += message;
+        //console.log(message);
+      });
+      
+      // convert into JSON object when all messages are received
+      shell.end(function(err) {
+        if (err) console.log(err);
+        //console.log(spec);
+        spec = JSON.parse(spec_temp);
+        
+        // plot the trace
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
 
-        pythonProcess.stdout.on('end', function() {
-        // Do something with the data returned from python script
-          result = JSON.parse(result);
-          for (var i=0; i<result.length; i++) {
-              //console.log(i, result[i][i])
-              JS9.AddRegions('point', {x:i, y:result[i][i] + spec_low, radius:1});
-          }
-          console.log("Done!");
-        });
-
-        pythonProcess.on('exit', function (code, signal) {
-          console.log('child process exited with ' +
-                      `code ${code} and signal ${signal}`);
-        });
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(function(){drawChart(spec)});
 
       });
-    }
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart(spec) {
+        
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        // assumes "word" is a string and "count" is a number
+        data.addColumn('number', 'pixel');
+        data.addColumn('number', 'Source');
+        data.addColumn('number', 'Sky');
+        data.addColumn('number', 'Uncertainty');
+
+        for (var i = 0; i < spec.length; i++) {
+            data.addRow([
+                i,
+                spec[i][i]['spec'],
+                spec[i][i]['sky'],
+                spec[i][i]['err']
+            ]);
+        }
+
+        // Set chart options
+        var options = {'title':'Extracted Spectrum',
+                       'height':500,
+           'explorer': {},
+           'vAxis': { 'logScale': true }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementsByClassName('extractedSpectrum')[0]);
+        chart.draw(data, options);
+      }
+
+      }
 
   </script>
 
