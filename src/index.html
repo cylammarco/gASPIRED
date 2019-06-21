@@ -95,10 +95,11 @@
             <span></span>
             <span></span>
           </button>
-
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
+          <h2>Automated SpectroPhotometric Image REDuction pipeline</h2>
+<!--
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto">
               <li class="nav-item active">
@@ -110,64 +111,173 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Note 3</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Note 4</a>
-              </li>
             </ul>
           </div>
+        -->
         </div>
       </nav>
 
       <div class="body">
         
         <div class="home">
-          <h2>OPTICON funded project - ASPIRED</h2>
-          <p>Automated SpectroPhotometric Image REDuction pipeline.</p>
-          <div class="line"></div>
-          <h2>Another Title</h2>
-          <p>Some words.</p>
+          <h2>Importing, Tracing and Extracting Spectrum</h2>
+          <p>Load a FITS file from system.</p>
         </div>
 
         <div class="imageScience">
-          <div>
-            <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load FITS</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:specTrace('auto')">Identify Spectrum</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:addBox()">Mark Spectrum</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:specTrace('manual')">Identify Marked Spectrum</button>
-            <button type="button" class="btn btn-primary" onclick="javascript:JS9.RemoveRegions()">Remove All Markers</button>
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-4">
+              <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load test FITS</button>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <label class="btn btn-primary" for="loadfile">Load FITS file<input id='loadfile' type='file' hidden></label>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Scale &nbsp; &nbsp; &nbsp;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('zmax')">ZMax</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('zscale')">ZScale</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('dataminmax')">MinMax</a>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- Second button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop2" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Colourmap &nbsp; &nbsp; &nbsp;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('grey')">Grey</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('heat')">Heat</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('cool')">Cool</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('viridis')">Viridis</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('magma')">Magma</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('inferno')">Inferno</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('plasma')">Plasma</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('i8')">i8</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('aips0')">aips0</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('sls')">sls</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('a')">a</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('b')">b</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('bb')">bb</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('he')">he</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('hsv')">hsv</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('rainbow')">Rainbow</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('staircase')">Staircase</a>
+                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('standard')">Standard</a>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div id='scale' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio"> Log
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio"> Linear
+                </label>
+              </div>
+            </div>
           </div>
-          Order:
-          <select id="order">
-            <option value="null" selected> ----- </option>
-            <option value="minmax">MinMax</option>
-            <option value="zscale">Zscale</option>
-          </select>
-          Palette:
-          <select id="palette">
-            <option value="RdYlGn">RdYlGn</option>
-            <option value="Spectral" selected>Spectral</option>
-            <option value="RdYlBu">RdYlBu</option>
-            <option value="RdGy">RdGy</option>
-            <option value="RdBu">RdBu</option>
-            <option value="PiYG">PiYG</option>
-            <option value="PRGn">PRGn</option>
-            <option value="BrBG">BrBG</option>
-            <option value="PuOr">PuOr</option>
-          </select>
+
           <!--
           <div id="heatmap"></div>
           <div class="JS9Menubar" data-width="1000px"></div>
           -->
           <p></p>
-          <div class="JS9" data-width="1000px" data-height="400px"></div>
-        </div>
-        <div>
-           <button type="button" class="btn btn-primary" onclick="javascript:specExtract()">Extract Spectrum</button>
-        </div>
-        <div class="line"></div>
+          <div class="JS9" data-width="1000px" data-height="400px" width='1000px'></div>
+<p>Trace</p>
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-3">
+              <div id='aptrace' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active" id='auto'>
+                  <input type="radio"> Auto
+                </label>
+                <label class="btn btn-secondary" id='manual'>
+                  <input type="radio"> Manual
+                </label>
+              </div>
+            </div>
 
-        <div class="extractedSpectrum">
-        </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Spectral Direction &nbsp; &nbsp; &nbsp;
+                </button>
+                <div id='saxis' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="#">Horizontal</a>
+                  <a class="dropdown-item" href="#">Vertical</a>
+                </div>
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Fit Type &nbsp; &nbsp; &nbsp;
+                </button>
+                <div id='fittype' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="#">Spline</a>
+                  <a class="dropdown-item" href="#">Polynomial</a>
+                </div>
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Order</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='order' style="width: 40px;">
+              </div>
+            </div>
+            <div>
+              &nbsp;
+              <button type="button" class="btn btn-primary aptrace-auto" onclick="javascript:specTrace('auto')">Identify Brightest Spectrum</button>
+              <button type="button" class="btn btn-primary aptrace-manual" style="display: none;" onclick="javascript:addBox()">Mark Spectrum</button>
+              <button type="button" class="btn btn-primary aptrace-manual" style="display: none;" onclick="javascript:specTrace('manual')">Identify Spectrum</button>
+              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions()">Clear All</button>
+            </div>
+          </div>
+
+<p>Extract</p>
+
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-3">
+              <div id='extracttype' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active" id='optimal'>
+                  <input type="radio"> Optimal
+                </label>
+                <label class="btn btn-secondary" id='tophat'>
+                  <input type="radio"> Tophat
+                </label>
+              </div>
+            </div>
+            &nbsp;
+            <button type="button" class="btn btn-primary" onclick="javascript:specExtract()">Extract Spectrum</button>
+          </div>
+
+        <div class="line"></div>
+        <h2>Extracted Spectrum</h2>
+        <br>
+        <div class="extractedSpectrum"></div>
 
       </div>
 
@@ -197,7 +307,6 @@
 
     var imgOpts = {
       scale: "log",
-      zoom: "1.0",
       colormap: "grey"
     };
 
@@ -207,25 +316,124 @@
       inimage: "#000000"
     };
 
+    loadfile.addEventListener('change', readURL);
+
+    function readURL(input) {
+      var inputfile = input.target.files[0];
+      var filename = inputfile.name;
+      opts = {
+          ...imgOpts,
+          ...{
+          parentFile: "fits/" + filename
+        }
+      }
+      JS9.Load(inputfile, opts, {
+        display: "JS9"
+      });
+    }
+
     function addBox() {
-      var spec_width = JS9.images[0].raw.header.NAXIS1;
+      JS9.RemoveRegions('box');
+      var spec_height = JS9.images[0].raw.header.NAXIS2,
+          spec_width = JS9.images[0].raw.header.NAXIS1;
+      if (saxis == 1) {
         JS9.AddRegions('box', {height: 25, width: spec_width});
+      } else {
+        JS9.AddRegions('box', {height: spec_height, width: 25});
+      }
     }
 
     function loadFITS() {
       JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
     }
 
-    var myTrace;
-    function specTrace(mode) {
+    // Toggle display log/linear scale
+    $('#scale').click(function() {
+      if (JS9.GetScale().scale == 'log') {
+        JS9.SetScale('linear');
+      } else {
+        JS9.SetScale('log');
+      }
+    });
 
+    // Toggle auto/manual tracing
+    $('#aptrace').click(function() {
+      if ($('#aptrace #auto').hasClass('active')) {
+        $('.aptrace-auto').hide();
+        $('.aptrace-manual').show();
+      } else {
+        $('.aptrace-auto').show();
+        $('.aptrace-manual').hide();
+      }
+    });
+
+    // Toggle optimal/tophat tracing
+    var optimal = 'optimal';
+    $('#extracttype').on('click', function () {
+      if($('#optimal').hasClass('active')) {
+        optimal = 'tophat';
+      } else {
+        optimal = 'optimal';
+      }
+    });
+
+    // Select spline/polynomial
+    var fittype = 'spline';
+    $('#fittype a').click(function(){
+      fittype = $(this).text().toLowerCase();
+    });
+
+    // Select spectral direction, 0 = vertical, 1 = horizontal
+    var saxis = 1;
+    $('#saxis a').click(function(){
+      if ($(this).text() == 'Horizontal') {
+        saxis = 1;
+      } else {
+        saxis = 0;
+      }
+    });
+
+    var myTrace;
+
+    function specTrace(mode) {
+      JS9.RemoveRegions('point');
       var spectrum = JS9.images[0].raw,
           spec_width = spectrum.header.NAXIS1,
           spec_height = spectrum.header.NAXIS2;
 
       var trace = '';
-      let shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text'});
-      shell.send(JSON.stringify(spectrum));
+      var offset = 0;
+      console.log(fittype);
+      var order = $('#order')[0].value;
+      if (mode == 'manual') {
+
+        var box = JS9.GetRegions('box')[0],
+          box_height = box.height,
+          box_width = box.width;
+        
+        if (saxis == 1) {
+          var box_center = box.y,
+              spec_low = box_center - box_height / 2.,
+              spec_high = box_center + box_height / 2.
+        } else {
+          var box_center = box.x,
+              spec_low = box_center - box_width / 2.,
+              spec_high = box_center + box_width / 2.
+        }
+        
+        offset += spec_low;
+
+        var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [spec_low, spec_high, saxis, fittype, order]});
+        shell.send(JSON.stringify(spectrum));
+      } else {
+        if (saxis == 1) {
+          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [0, spec_height, saxis, fittype, order]});
+        } else {
+          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [0, spec_width, saxis, fittype, order]});
+        }
+
+        shell.send(JSON.stringify(spectrum));
+      }
       
       // append the stdout messages
       shell.on('message', function(message) {
@@ -239,35 +447,27 @@
         
         //console.log(trace[0][0]['mu']+1);
         // plot the trace
-        for (var i=0; i<myTrace.length; i++) {
-            JS9.AddRegions('point', {x:i+1, y:myTrace[i][i]['mu']+1, radius:1});
+        if (saxis == 1) {
+          for (var i=0; i<myTrace.length; i++) {
+              JS9.AddRegions('point', {x:i+1, y:myTrace[i][i]['mu']+1+offset, radius:1});
+          }
+        } else {
+          for (var i=0; i<myTrace.length; i++) {
+              JS9.AddRegions('point', {y:i+1, x:myTrace[i][i]['mu']+1+offset, radius:1});
+          }
         }
       });
-/*
-      if (mode == 'manual') {
-        var box = JS9.GetRegions('box')[0],
-          box_center = box.y,
-          box_height = box.height,
-          spec_low = box_center - box_height / 2.,
-          spec_high = box_center + box_height / 2.;
-      }
-
-      var start_pix = spec_low * spec_width,
-        end_pix = spec_high * spec_width,
-        spec_data = spectrum.data.slice(start_pix, end_pix);
-
-      var new_spec_height = spec_high-spec_low;
-*/
     }
 
-    var spec = '';
-    function specExtract(mode) {
+    var science_spec;
+    var standard_spec;
+    function specExtract() {
       var spectrum = JS9.images[0].raw,
           spec_width = spectrum.header.NAXIS1,
           spec_height = spectrum.header.NAXIS2,
           spec_temp = '';
-
-      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text'});
+      console.log(optimal);
+      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [saxis, optimal]});
       shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myTrace}));
       
       // append the stdout messages
@@ -280,14 +480,14 @@
       shell.end(function(err) {
         if (err) console.log(err);
         //console.log(spec);
-        spec = JSON.parse(spec_temp);
+        science_spec = JSON.parse(spec_temp);
         
         // plot the trace
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(function(){drawChart(spec)});
+        google.charts.setOnLoadCallback(function(){drawChart(science_spec)});
 
       });
 
@@ -314,10 +514,13 @@
         }
 
         // Set chart options
-        var options = {'title':'Extracted Spectrum',
-                       'height':500,
+        var options = {'title': 'Extracted Spectrum',
+                       'widht': 800,
+                       'height': 400,
+           'chartArea':{width:'80%',height:'90%'},
            'explorer': {},
-           'vAxis': { 'logScale': true }
+           'vAxis': { 'title': 'ADU', 'logScale': true },
+           'hAxis': { 'title': 'Pixel (Spectral Direction)'}
         };
 
         var chart = new google.visualization.LineChart(document.getElementsByClassName('extractedSpectrum')[0]);
