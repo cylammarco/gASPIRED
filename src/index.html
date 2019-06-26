@@ -98,8 +98,8 @@
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
           </button>
-          <h2>Automated SpectroPhotometric Image REDuction pipeline</h2>
-<!--
+<!--          <h2>Automated SpectroPhotometric Image REDuction pipeline</h2>
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav ml-auto">
               <li class="nav-item active">
@@ -119,20 +119,32 @@
 
       <div class="body">
         
-        <div class="home">
-          <h2>Importing, Tracing and Extracting Spectrum</h2>
-          <p>Load a FITS file from system.</p>
-        </div>
+
+<!--
+
+#### ##### ##### ##### ##  # ##### #####
+#    #       #   #     ##  # #     #
+#### #       #   ##### # # # #     #####
+   # #       #   #     # ### #     #
+#### ##### ##### ##### #  ## ##### #####
+
+-->
 
         <div class="imageScience">
+
+          <div class="home">
+            <h2>Importing, Tracing and Extracting SCIENCE Spectrum</h2>
+            <p>Load a FITS file from system.</p>
+          </div>
+
           <div class="row">
             &nbsp; &nbsp; &nbsp;
             <div class="col-xs-4">
-              <button type="button" class="btn btn-primary" onclick="javascript:loadFITS()">Load test FITS</button>
+              <button type="button" class="btn btn-primary" onclick="javascript:loadFITS('ScienceJS9')">Load test FITS</button>
             </div>
             &nbsp;
             <div class="col-xs-4">
-              <label class="btn btn-primary" for="loadfile">Load FITS file<input id='loadfile' type='file' hidden></label>
+              <label class="btn btn-primary" for="loadScienceFile">Load FITS file<input id='loadScienceFile' type='file' hidden></label>
             </div>
             &nbsp;
             <div class="col-xs-4">
@@ -142,9 +154,9 @@
                   Scale &nbsp; &nbsp; &nbsp;
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('zmax')">ZMax</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('zscale')">ZScale</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetScale('dataminmax')">MinMax</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('zmax', {display: 'ScienceJS9'})">ZMax</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('zscale', {display: 'ScienceJS9'})">ZScale</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('dataminmax', {display: 'ScienceJS9'})">MinMax</a>
                 </div>
               </div>
             </div>
@@ -156,30 +168,30 @@
                   Colourmap &nbsp; &nbsp; &nbsp;
                 </button>
                 <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('grey')">Grey</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('heat')">Heat</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('cool')">Cool</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('viridis')">Viridis</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('magma')">Magma</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('inferno')">Inferno</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('plasma')">Plasma</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('i8')">i8</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('aips0')">aips0</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('sls')">sls</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('a')">a</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('b')">b</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('bb')">bb</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('he')">he</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('hsv')">hsv</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('rainbow')">Rainbow</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('staircase')">Staircase</a>
-                  <a class="dropdown-item" href="#" onclick="javscript:JS9.SetColormap('standard')">Standard</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('grey', {display: 'ScienceJS9'})">Grey</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('heat', {display: 'ScienceJS9'})">Heat</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('cool', {display: 'ScienceJS9'})">Cool</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('viridis', {display: 'ScienceJS9'})">Viridis</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('magma', {display: 'ScienceJS9'})">Magma</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('inferno', {display: 'ScienceJS9'})">Inferno</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('plasma', {display: 'ScienceJS9'})">Plasma</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('i8', {display: 'ScienceJS9'})">i8</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('aips0', {display: 'ScienceJS9'})">aips0</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('sls', {display: 'ScienceJS9'})">sls</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('a', {display: 'ScienceJS9'})">a</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('b', {display: 'ScienceJS9'})">b</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('bb', {display: 'ScienceJS9'})">bb</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('he', {display: 'ScienceJS9'})">he</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('hsv', {display: 'ScienceJS9'})">hsv</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('rainbow', {display: 'ScienceJS9'})">Rainbow</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('staircase', {display: 'ScienceJS9'})">Staircase</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('standard', {display: 'ScienceJS9'})">Standard</a>
                 </div>
               </div>
             </div>
             &nbsp;
             <div class="col-xs-4">
-              <div id='scale' class="btn-group btn-group-toggle" data-toggle="buttons">
+              <div id='sciscale' class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary active">
                   <input type="radio"> Log
                 </label>
@@ -195,12 +207,12 @@
           <div class="JS9Menubar" data-width="1000px"></div>
           -->
           <p></p>
-          <div class="JS9" data-width="1000px" data-height="400px" width='1000px'></div>
-<p>Trace</p>
+          <div class="JS9" id="ScienceJS9" data-width="1000px" data-height="400px" width='1000px'></div>
+            <p>Trace</p>
           <div class="row">
             &nbsp; &nbsp; &nbsp;
             <div class="col-xs-3">
-              <div id='aptrace' class="btn-group btn-group-toggle" data-toggle="buttons">
+              <div id='sciaptrace' class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary active" id='auto'>
                   <input type="radio"> Auto
                 </label>
@@ -217,9 +229,9 @@
                 <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Spectral Direction &nbsp; &nbsp; &nbsp;
                 </button>
-                <div id='saxis' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="#">Horizontal</a>
-                  <a class="dropdown-item" href="#">Vertical</a>
+                <div id='scisaxis' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="javascript:void(0);">Horizontal</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Vertical</a>
                 </div>
               </div>
             </div>
@@ -231,38 +243,38 @@
                 <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Fit Type &nbsp; &nbsp; &nbsp;
                 </button>
-                <div id='fittype' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="#">Spline</a>
-                  <a class="dropdown-item" href="#">Polynomial</a>
+                <div id='scifittype' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="javascript:void(0);">Spline</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Polynomial</a>
                 </div>
               </div>
             </div>
 
             &nbsp;
             <div class="col-xs-4">
-              <div class="input-group mb-3">
+              <div class="input-group mb-2">
                 <div class="input-group-prepend">
                   <button class="btn btn-primary" type="button" aria-pressed="false">Order</button>
                 </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='order' style="width: 40px;">
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='sciorder' style="width: 40px;">
               </div>
             </div>
             <div>
               &nbsp;
-              <button type="button" class="btn btn-primary aptrace-auto" onclick="javascript:specTrace('auto')">Identify Brightest Spectrum</button>
-              <button type="button" class="btn btn-primary aptrace-manual" style="display: none;" onclick="javascript:addBox()">Mark Spectrum</button>
-              <button type="button" class="btn btn-primary aptrace-manual" style="display: none;" onclick="javascript:specTrace('manual')">Identify Spectrum</button>
-              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions()">Clear All</button>
+              <button type="button" class="btn btn-primary sciaptrace-auto" onclick="javascript:specTrace('auto', 'ScienceJS9')">Identify Brightest Spectrum</button>
+              <button type="button" class="btn btn-primary sciaptrace-manual" style="display: none;" onclick="javascript:addBox('ScienceJS9')">Mark Spectrum</button>
+              <button type="button" class="btn btn-primary sciaptrace-manual" style="display: none;" onclick="javascript:specTrace('manual', 'ScienceJS9')">Identify Spectrum</button>
+              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions('ScienceJS9')">Clear All</button>
             </div>
           </div>
 
-<p>Extract</p>
+          <p>Extract</p>
 
           <div class="row">
             &nbsp; &nbsp; &nbsp;
             <div class="col-xs-3">
-              <div id='extracttype' class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary active" id='optimal'>
+              <div id='sciextracttype' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active" id='scioptimal'>
                   <input type="radio"> Optimal
                 </label>
                 <label class="btn btn-secondary" id='tophat'>
@@ -271,17 +283,330 @@
               </div>
             </div>
             &nbsp;
-            <button type="button" class="btn btn-primary" onclick="javascript:specExtract()">Extract Spectrum</button>
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Aperture Size</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='sciapwidth' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Gain</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1.0' id='scigain' style="width: 50px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Read Noise</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5.0' id='scireadnoise' style="width: 50px;">
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-6">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Cosmic Ray Sigma Clipping</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5' id='scicrsigma' style="width: 40px;">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Skip</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='sciskysep' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Width</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='sciskywidth' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Fit Degree</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='0' id='sciskydeg' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:specExtract('ScienceJS9')">Extract Spectrum</button>
+            </div>
           </div>
 
         <div class="line"></div>
-        <h2>Extracted Spectrum</h2>
+        <h2>Extracted SCIENCE Spectrum</h2>
         <br>
-        <div class="extractedSpectrum"></div>
+        <div class="scienceExtractedSpectrum"></div>
+        <div class="line"></div>
 
       </div>
 
     </div>
+
+<!--
+
+#### ##### ##### #   # ####  ##### ####  ####
+#      #   #   # ##  # #  ## #   # #   # #  ##
+####   #   ##### # # # #   # ##### ####  #   #
+   #   #   #   # #  ## #  ## #   # #  #  #  ##
+####   #   #   # #   # ####  #   # #   # ####
+
+-->
+        <div class="imageStandard">
+
+          <div class="home">
+            <h2>Importing, Tracing and Extracting STANDARD Spectrum</h2>
+            <p>Load a FITS file from system.</p>
+          </div>
+
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-4">
+              <button type="button" class="btn btn-primary" onclick="javascript:loadFITS('StandardJS9')">Load test FITS</button>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <label class="btn btn-primary" for="loadStandardFile">Load FITS file<input id='loadStandardFile' type='file' hidden></label>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Scale &nbsp; &nbsp; &nbsp;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('zmax', {display: 'StandardJS9'})">ZMax</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('zscale', {display: 'StandardJS9'})">ZScale</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetScale('dataminmax', {display: 'StandardJS9'})">MinMax</a>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- Second button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop2" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Colourmap &nbsp; &nbsp; &nbsp;
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('grey', {display: 'StandardJS9'})">Grey</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('heat', {display: 'StandardJS9'})">Heat</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('cool', {display: 'StandardJS9'})">Cool</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('viridis', {display: 'StandardJS9'})">Viridis</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('magma', {display: 'StandardJS9'})">Magma</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('inferno', {display: 'StandardJS9'})">Inferno</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('plasma', {display: 'StandardJS9'})">Plasma</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('i8', {display: 'StandardJS9'})">i8</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('aips0', {display: 'StandardJS9'})">aips0</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('sls', {display: 'StandardJS9'})">sls</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('a', {display: 'StandardJS9'})">a</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('b', {display: 'StandardJS9'})">b</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('bb', {display: 'StandardJS9'})">bb</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('he', {display: 'StandardJS9'})">he</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('hsv', {display: 'StandardJS9'})">hsv</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('rainbow', {display: 'StandardJS9'})">Rainbow</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('staircase', {display: 'StandardJS9'})">Staircase</a>
+                  <a class="dropdown-item" href="javascript:void(0);" onclick="javscript:JS9.SetColormap('standard', {display: 'StandardJS9'})">Standard</a>
+                </div>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div id='stdscale' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio"> Log
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio"> Linear
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!--
+          <div id="heatmap"></div>
+          <div class="JS9Menubar" data-width="1000px"></div>
+          -->
+          <p></p>
+          <div class="JS9" id="StandardJS9" data-width="1000px" data-height="400px" width='1000px'></div>
+            <p>Trace</p>
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-3">
+              <div id='stdaptrace' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active" id='auto'>
+                  <input type="radio"> Auto
+                </label>
+                <label class="btn btn-secondary" id='manual'>
+                  <input type="radio"> Manual
+                </label>
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Spectral Direction &nbsp; &nbsp; &nbsp;
+                </button>
+                <div id='stdsaxis' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="javascript:void(0);">Horizontal</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Vertical</a>
+                </div>
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-4">
+              <!-- First button group -->
+              <div class="btn-group" role="group">
+                <button id="btnGroupDrop3" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Fit Type &nbsp; &nbsp; &nbsp;
+                </button>
+                <div id='stdfittype' class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="javascript:void(0);">Spline</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Polynomial</a>
+                </div>
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Order</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='stdorder' style="width: 40px;">
+              </div>
+            </div>
+            <div>
+              &nbsp;
+              <button type="button" class="btn btn-primary stdaptrace-auto" onclick="javascript:specTrace('auto', 'StandardJS9')">Identify Brightest Spectrum</button>
+              <button type="button" class="btn btn-primary stdaptrace-manual" style="display: none;" onclick="javascript:addBox('StandardJS9')">Mark Spectrum</button>
+              <button type="button" class="btn btn-primary stdaptrace-manual" style="display: none;" onclick="javascript:specTrace('manual', 'StandardJS9')">Identify Spectrum</button>
+              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions('StandardJS9')">Clear All</button>
+            </div>
+          </div>
+
+          <p>Extract</p>
+
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-3">
+              <div id='stdextracttype' class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active" id='stdoptimal'>
+                  <input type="radio"> Optimal
+                </label>
+                <label class="btn btn-secondary" id='tophat'>
+                  <input type="radio"> Tophat
+                </label>
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Aperture Size</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='stdapwidth' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Gain</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1.0' id='stdgain' style="width: 50px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Read Noise</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5.0' id='stdreadnoise' style="width: 50px;">
+              </div>
+            </div>
+
+            &nbsp;
+            <div class="col-xs-6">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Cosmic Ray Sigma Clipping</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5' id='stdcrsigma' style="width: 40px;">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            &nbsp; &nbsp; &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Skip</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='3' id='stdskysep' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Width</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='stdskywidth' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div class="col-xs-4">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <button class="btn btn-primary" type="button" aria-pressed="false">Sky Fit Degree</button>
+                </div>
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='0' id='stdskydeg' style="width: 40px;">
+              </div>
+            </div>
+            &nbsp;
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:specExtract('StandardJS9')">Extract Spectrum</button>
+            </div>
+          </div>
+
+        <div class="line"></div>
+        <h2>Extracted STANDARD Spectrum</h2>
+        <br>
+        <div class="standardExtractedSpectrum"></div>
+        <div class="line"></div>
+
+      </div>
+
+    </div>
+
   </div>
 
   <script type="text/javascript">
@@ -316,9 +641,10 @@
       inimage: "#000000"
     };
 
-    loadfile.addEventListener('change', readURL);
+    loadScienceFile.addEventListener('change', readScienceURL);
+    loadStandardFile.addEventListener('change', readStandardURL);
 
-    function readURL(input) {
+    function readScienceURL(input) {
       var inputfile = input.target.files[0];
       var filename = inputfile.name;
       opts = {
@@ -328,23 +654,46 @@
         }
       }
       JS9.Load(inputfile, opts, {
-        display: "JS9"
+        display: 'ScienceJS9',
       });
     }
 
-    function addBox() {
+    function readStandardURL(input) {
+      var inputfile = input.target.files[0];
+      var filename = inputfile.name;
+      opts = {
+          ...imgOpts,
+          ...{
+          parentFile: "fits/" + filename
+        }
+      }
+      JS9.Load(inputfile, opts, {
+        display: 'StandardJS9',
+      });
+    }
+
+    function addBox(obstype) {
       JS9.RemoveRegions('box');
       var spec_height = JS9.images[0].raw.header.NAXIS2,
           spec_width = JS9.images[0].raw.header.NAXIS1;
+      var saxis;
+      if (obstype == 'ScienceJS9') {
+        saxis = scisaxis;
+      }
+
+      if (obstype == 'StandardJS9') {
+        saxis = stdsaxis;
+      }
+
       if (saxis == 1) {
-        JS9.AddRegions('box', {height: 25, width: spec_width});
+        JS9.AddRegions('box', {height: 25, width: spec_width}, {display: obstype});
       } else {
-        JS9.AddRegions('box', {height: spec_height, width: 25});
+        JS9.AddRegions('box', {height: spec_height, width: 25}, {display: obstype});
       }
     }
 
-    function loadFITS() {
-      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits');
+    function loadFITS(obstype) {
+      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits', {display: obstype});
     }
 
     // Toggle display log/linear scale
@@ -357,57 +706,105 @@
     });
 
     // Toggle auto/manual tracing
-    $('#aptrace').click(function() {
-      if ($('#aptrace #auto').hasClass('active')) {
-        $('.aptrace-auto').hide();
-        $('.aptrace-manual').show();
+    $('#sciaptrace').click(function() {
+      if ($('#sciaptrace #auto').hasClass('active')) {
+        $('.sciaptrace-auto').hide();
+        $('.sciaptrace-manual').show();
       } else {
-        $('.aptrace-auto').show();
-        $('.aptrace-manual').hide();
+        $('.sciaptrace-auto').show();
+        $('.sciaptrace-manual').hide();
+      }
+    });
+
+    // Toggle auto/manual tracing
+    $('#stdaptrace').click(function() {
+      if ($('#stdaptrace #auto').hasClass('active')) {
+        $('.stdaptrace-auto').hide();
+        $('.stdaptrace-manual').show();
+      } else {
+        $('.stdaptrace-auto').show();
+        $('.stdaptrace-manual').hide();
       }
     });
 
     // Toggle optimal/tophat tracing
-    var optimal = 'optimal';
-    $('#extracttype').on('click', function () {
-      if($('#optimal').hasClass('active')) {
-        optimal = 'tophat';
+    var scioptimal = 'optimal';
+    $('#sciextracttype').on('click', function () {
+      if($('#scioptimal').hasClass('active')) {
+        scioptimal = 'tophat';
       } else {
-        optimal = 'optimal';
+        scioptimal = 'optimal';
+      }
+    });
+
+    // Toggle optimal/tophat tracing
+    var stdoptimal = 'optimal';
+    $('#stdextracttype').on('click', function () {
+      if($('#stdoptimal').hasClass('active')) {
+        stdoptimal = 'tophat';
+      } else {
+        stdoptimal = 'optimal';
       }
     });
 
     // Select spline/polynomial
-    var fittype = 'spline';
-    $('#fittype a').click(function(){
-      fittype = $(this).text().toLowerCase();
+    var scifittype = 'spline';
+    $('#scifittype a').click(function(){
+      scifittype = $(this).text().toLowerCase();
+    });
+
+    // Select spline/polynomial
+    var stdfittype = 'spline';
+    $('#stdfittype a').click(function(){
+      stdfittype = $(this).text().toLowerCase();
     });
 
     // Select spectral direction, 0 = vertical, 1 = horizontal
-    var saxis = 1;
-    $('#saxis a').click(function(){
+    var scisaxis = 1;
+    $('#scisaxis a').click(function(){
       if ($(this).text() == 'Horizontal') {
-        saxis = 1;
+        scisaxis = 1;
       } else {
-        saxis = 0;
+        scisaxis = 0;
+      }
+    });
+
+    // Select spectral direction, 0 = vertical, 1 = horizontal
+    var stdsaxis = 1;
+    $('#stdsaxis a').click(function(){
+      if ($(this).text() == 'Horizontal') {
+        stdsaxis = 1;
+      } else {
+        stdsaxis = 0;
       }
     });
 
     var myTrace;
 
-    function specTrace(mode) {
-      JS9.RemoveRegions('point');
-      var spectrum = JS9.images[0].raw,
+    function specTrace(mode, obstype) {
+      JS9.RemoveRegions('point', {display: obstype});
+      var spectrum = JS9.GetImage({display: obstype}).raw,
           spec_width = spectrum.header.NAXIS1,
           spec_height = spectrum.header.NAXIS2;
 
       var trace = '';
       var offset = 0;
-      console.log(fittype);
-      var order = $('#order')[0].value;
+      var order, saxis, fittype;
+
+      if (obstype=='ScienceJS9') {
+        order = $('#sciorder')[0].value;
+        saxis = scisaxis;
+        fittype = scifittype;
+      }
+      if (obstype=='StandardJS9') {
+        order = $('#stdorder')[0].value;
+        saxis = stdsaxis;
+        fittype = stdfittype;
+      }
+
       if (mode == 'manual') {
 
-        var box = JS9.GetRegions('box')[0],
+        var box = JS9.GetRegions('box', {display: obstype})[0],
           box_height = box.height,
           box_width = box.width;
         
@@ -449,11 +846,11 @@
         // plot the trace
         if (saxis == 1) {
           for (var i=0; i<myTrace.length; i++) {
-              JS9.AddRegions('point', {x:i+1, y:myTrace[i][i]['mu']+1+offset, radius:1});
+              JS9.AddRegions('point', {x:i+1, y:myTrace[i][i]['mu']+1+offset, radius:1}, {display: obstype});
           }
         } else {
           for (var i=0; i<myTrace.length; i++) {
-              JS9.AddRegions('point', {y:i+1, x:myTrace[i][i]['mu']+1+offset, radius:1});
+              JS9.AddRegions('point', {y:i+1, x:myTrace[i][i]['mu']+1+offset, radius:1}, {display: obstype});
           }
         }
       });
@@ -461,13 +858,41 @@
 
     var science_spec;
     var standard_spec;
-    function specExtract() {
+    function specExtract(obstype) {
       var spectrum = JS9.images[0].raw,
           spec_width = spectrum.header.NAXIS1,
           spec_height = spectrum.header.NAXIS2,
           spec_temp = '';
-      console.log(optimal);
-      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [saxis, optimal]});
+
+      var apwidth, gain, readnoise, crsigma, skysep, skywidth, skydeg, saxis, optimal;
+
+      if (obstype == 'ScienceJS9') {
+        apwidth = $('#sciapwidth')[0].value;
+        gain = $('#scigain')[0].value;
+        readnoise = $('#scireadnoise')[0].value;
+        crsigma = $('#scicrsigma')[0].value;
+        skysep = $('#sciskysep')[0].value;
+        skywidth = $('#sciskywidth')[0].value;
+        skydeg = $('#sciskydeg')[0].value;
+        saxis = scisaxis;
+        optimal = scioptimal;
+      }
+
+      if (obstype == 'StandardJS9') {
+        apwidth = $('#stdapwidth')[0].value;
+        gain = $('#stdgain')[0].value;
+        readnoise = $('#stdreadnoise')[0].value;
+        crsigma = $('#stdcrsigma')[0].value;
+        skysep = $('#stdskysep')[0].value;
+        skywidth = $('#stdskywidth')[0].value;
+        skydeg = $('#stdskydeg')[0].value;
+        saxis = stdsaxis;
+        optimal = stdoptimal;
+      }
+
+      console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise);
+      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise]});
+
       shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myTrace}));
       
       // append the stdout messages
@@ -487,14 +912,14 @@
         google.charts.load('current', {'packages':['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(function(){drawChart(science_spec)});
+        google.charts.setOnLoadCallback(function(){drawChart(science_spec, obstype)});
 
       });
 
       // Callback that creates and populates a data table,
       // instantiates the pie chart, passes in the data and
       // draws it.
-      function drawChart(spec) {
+      function drawChart(spec, obstype) {
         
         // Create the data table.
         var data = new google.visualization.DataTable();
@@ -522,12 +947,15 @@
            'vAxis': { 'title': 'ADU', 'logScale': true },
            'hAxis': { 'title': 'Pixel (Spectral Direction)'}
         };
-
-        var chart = new google.visualization.LineChart(document.getElementsByClassName('extractedSpectrum')[0]);
+        if (obstype=='ScienceJS9') {
+          var chart = new google.visualization.LineChart(document.getElementsByClassName('scienceExtractedSpectrum')[0]);
+        }
+        if (obstype=='StandardJS9') {
+          var chart = new google.visualization.LineChart(document.getElementsByClassName('standardExtractedSpectrum')[0]);
+        }
         chart.draw(data, options);
       }
-
-      }
+    }
 
   </script>
 
