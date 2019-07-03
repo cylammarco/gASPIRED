@@ -1,8 +1,8 @@
 {
-  "name": "ASPIRED",
-  "productName": "ASPIRED",
+  "name": "gASPIRED",
+  "productName": "gASPIRED",
   "version": "0.1.0",
-  "description": "Automated SpectroPhotometric Image REDuction",
+  "description": "GUI for ASPIRED",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -32,26 +32,28 @@
         "packageManager": "npm"
       },
       "electronWinstallerConfig": {
-        "name": "ASPIRED"
+        "name": "gASPIRED"
       },
       "electronInstallerDebian": {
-        "name": "ASPIRED"
+        "name": "gASPIRED"
       },
       "electronInstallerRedhat": {
-        "name": "ASPIRED"
+        "name": "gASPIRED"
       },
       "github_repository": {
         "owner": "cylammarco",
-        "name": "ASPIRED"
+        "name": "gASPIRED"
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "ASPIRED"
+        "name": "gASPIRED"
       }
     }
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "ASPIRED": "git://github.com/cylammarco/ASPIRED.git",
+    "anychart": "^8.6.0",
     "bootstrap": "^4.3.1",
     "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",

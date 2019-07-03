@@ -2,8 +2,6 @@
 ._*
 *.pyc
 out/
-src/testing_with_motty.txt
-src/spec_input_manual.txt
 src/build/
 src/dist/
 src/pages/
@@ -13,3 +11,4 @@ out/*
 src/build/
 src/dist/
 src/pages/
+src/ASPIRED/__pycache__

@@ -1,9 +1,11 @@
 import sys
-sys.path.append('ASPIRED')
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.join(dir_path, '..', 'node_modules/ASPIRED'))
 
 import json
 import numpy as np
-from ASPIRED import twodspec
+from aspired import twodspec
 
 apwidth = int(float(sys.argv[1]))
 Saxis = int(float(sys.argv[2]))
@@ -21,8 +23,8 @@ data = json.loads(lines)
 f = data['spectrum']
 trace = data['myTrace']
 
-mu = np.array([j[str(i)]['mu'] for i, j in enumerate(trace)])
-sigma = np.array([j[str(i)]['sig'] for i, j in enumerate(trace)])
+mu = np.array([j['mu'] for i, j in enumerate(trace)])
+sigma = np.array([j['sig'] for i, j in enumerate(trace)])
 
 x_len = f['hdu']['naxis1']
 y_len = f['hdu']['naxis2']
@@ -45,9 +47,9 @@ spec, sky, err = twodspec.ap_extract(
 # format into a json
 json.encoder.FLOAT_REPR = lambda o: format(o, '.3f')
 if Saxis == 1:
-    my_json = json.dumps([{i: {"spec": spec[i], "sky": sky[i], "err": err[i]}} for i in range(x_len)])
+    my_json = json.dumps([{"spec": spec[i], "sky": sky[i], "err": err[i]} for i in range(x_len)])
 else:
-    my_json = json.dumps([{i: {"spec": spec[i], "sky": sky[i], "err": err[i]}} for i in range(y_len)])
+    my_json = json.dumps([{"spec": spec[i], "sky": sky[i], "err": err[i]} for i in range(y_len)])
 
 # stdout
 print(my_json)
