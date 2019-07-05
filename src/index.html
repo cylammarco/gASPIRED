@@ -31,6 +31,7 @@
   <script type="text/javascript" src="../node_modules/@fortawesome/fontawesome-free/js/fontawesome.min.js"></script>
   <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" src="./myjs9prefs.js"></script>
+  <script type="text/javascript" src="./standard_name.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9support.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
@@ -604,11 +605,10 @@
         <br>
         <div id="standardExtractedSpectrum" style="height:600px"></div>
         <div class="line"></div>
-
         <div class="fluxCalibration">
 
           <div class="home">
-            <h2>Flux Calibration</h2>
+            <h2>Get Standard Spectrum</h2>
             <p>Select the standard star from the dropdown menu below.</p>
           </div>
 
@@ -627,20 +627,15 @@
                   <a class="dropdown-item" href="javascript:void(0);">ESO WD</a>
                   <a class="dropdown-item" href="javascript:void(0);">ESO XSHOOTER</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf Blackbody</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf KPNO</a>
+                  <a class="dropdown-item" href="javascript:void(0);">iraf BSTDS</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf CTIO</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf CTIO new</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf CTIO new blue</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf CTIO new red</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf IIDS</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf IRS</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf OKE</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf Red</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf 16</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf 16 Blue</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf 16 Red</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf 50</a>
-                  <a class="dropdown-item" href="javascript:void(0);">iraf 50 Red</a>
                   <a class="dropdown-item" href="javascript:void(0);">iraf Hayes</a>
                 </div>
               </div>
@@ -652,7 +647,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ESO CTIO List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id='esoctio-dropdown-menu' class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">Xi2 Cet (HR 718)</a>
                   <a class="dropdown-item" href="javascript:void(0);">Pi2 Ori (HR 1544)</a>
                   <a class="dropdown-item" href="javascript:void(0);">Eta Hya (HR 3454)</a>
@@ -676,7 +671,7 @@
                   <a class="dropdown-item" href="javascript:void(0);">LTT 4364</a>
                   <a class="dropdown-item" href="javascript:void(0);">Feige 56</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 4816 </a>
-                  <a class="dropdown-item" href="javascript:void(0);">CD -32d9927</a>
+                  <a class="dropdown-item" href="javascript:void(0);">CD-32d9927</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 6248</a>
                   <a class="dropdown-item" href="javascript:void(0);">EG 274</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 7379</a>
@@ -694,7 +689,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ESO HST List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="esohst-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">Zeta Cas (HR 153)</a>
                   <a class="dropdown-item" href="javascript:void(0);">BPM 16274</a>
                   <a class="dropdown-item" href="javascript:void(0);">GD 50</a>
@@ -731,7 +726,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ESO OKE List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="esooke-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">G158-100</a>
                   <a class="dropdown-item" href="javascript:void(0);">HZ 4</a>
                   <a class="dropdown-item" href="javascript:void(0);">G191B2B</a>
@@ -749,7 +744,7 @@
                   <a class="dropdown-item" href="javascript:void(0);">G138-31</a>
                   <a class="dropdown-item" href="javascript:void(0);">G24-9</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD+28D4211</a>
-                  <a class="dropdown-item" href="javascript:void(0);">B0+25d4655</a>
+                  <a class="dropdown-item" href="javascript:void(0);">BD+25d4655</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 9491</a>
                   <a class="dropdown-item" href="javascript:void(0);">Feige 110</a>
                   <a class="dropdown-item" href="javascript:void(0);">GD 248</a>
@@ -767,7 +762,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ESO WD List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="esowd-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">G191-B2B</a>
                   <a class="dropdown-item" href="javascript:void(0);">GD 71</a>
                   <a class="dropdown-item" href="javascript:void(0);">GD 153</a>
@@ -782,7 +777,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   ESO XSHOOTER List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="esoxshooter-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">GD 71</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 3218</a>
                   <a class="dropdown-item" href="javascript:void(0);">GD 153</a>
@@ -799,7 +794,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf Blackbody List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafblackbody-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">U</a>
                   <a class="dropdown-item" href="javascript:void(0);">B</a>
                   <a class="dropdown-item" href="javascript:void(0);">V</a>
@@ -814,14 +809,21 @@
                 </div>
               </div>
             </div>
-            <div id="irafkpno-button" class="col-xs-4 stdlib" style="display: none;">
+            <div id="irafbstds-button" class="col-xs-4 stdlib" style="display: none;">
               &nbsp;
               <!-- First button group -->
               <div class="btn-group" role="group">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf KPNO List &nbsp; &nbsp; &nbsp;
+                  iraf BSTDS List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafbstds-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
+                  <a class="dropdown-item" href="javascript:void(0);">HD 15318</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 74280</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 100889</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 188350</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 198001</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 214923</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 224926</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 718</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 3454</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 3982</a>
@@ -834,13 +836,6 @@
                   <a class="dropdown-item" href="javascript:void(0);">HR 7950</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 8634</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 9087</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 15318</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 74280</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 100889</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 188350</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 198001</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 214923</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 224926</a>
                 </div>
               </div>
             </div>
@@ -851,7 +846,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf CTIO List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafctio-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">BD 8</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 25</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 73632</a>
@@ -910,11 +905,11 @@
                   <a class="dropdown-item" href="javascript:void(0);">LDS 749</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 4099</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 8702</a>
-                  <a class="dropdown-item" href="javascript:void(0);">ROSE 627</a>
-                  <a class="dropdown-item" href="javascript:void(0);">W 1346</a>
+                  <a class="dropdown-item" href="javascript:void(0);">ROSS 627</a>
                   <a class="dropdown-item" href="javascript:void(0);">W 485a</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Wolf 1346</a>
+                  <a class="dropdown-item" href="javascript:void(0);">W 1346</a>
                   <a class="dropdown-item" href="javascript:void(0);">Wolf 485a</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Wolf 1346</a>
                 </div>
               </div>
             </div>
@@ -925,91 +920,69 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf CTIO New List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafctionew-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">CD 32</a>
+                  <a class="dropdown-item" href="javascript:void(0);">CD 32 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">CD 32 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">EG 21</a>
+                  <a class="dropdown-item" href="javascript:void(0);">EG 21 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">EG 21 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">EG 274</a>
+                  <a class="dropdown-item" href="javascript:void(0);">EG 274 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">EG 274 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">F 56</a>
+                  <a class="dropdown-item" href="javascript:void(0);">F 56 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">F 56 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">F 110</a>
+                  <a class="dropdown-item" href="javascript:void(0);">F 110 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">F 110 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">H 600</a>
+                  <a class="dropdown-item" href="javascript:void(0);">H 600 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">H 600 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 377</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 377 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 377 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 745</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 745 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 1020</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 1020 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 1020 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 1788</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 1788 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 1788 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 2415</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 2415 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 2415 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 2511</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 2511 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 2511 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 3218</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 3218 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 3218 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 3864</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 3864 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 3864 (red)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 4364</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 4364 (blue)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 4364</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 4816</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 4816 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 4816 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 6248</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 6248 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 6248 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 7379</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 7379 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 7379 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 7987</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 7987 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 7987 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 9239</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 9239 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 9239 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">L 9491</a>
-                </div>
-              </div>
-            </div>
-            <div id="irafctionewblue-button" class="col-xs-4 stdlib" style="display: none;">
-              &nbsp;
-              <!-- First button group -->
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf CTIO New Blue List &nbsp; &nbsp; &nbsp;
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="javascript:void(0);">CD 32</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 21</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 274</a>
-                  <a class="dropdown-item" href="javascript:void(0);">F 56</a>
-                  <a class="dropdown-item" href="javascript:void(0);">F 110</a>
-                  <a class="dropdown-item" href="javascript:void(0);">H 600</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 377</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 1020</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 1788</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 2415</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 2511</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 3218</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 3864</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 4364</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 4816</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 6248</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 7379</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 7987</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 9239</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 9491</a>
-                </div>
-              </div>
-            </div>
-            <div id="irafctionewred-button" class="col-xs-4 stdlib" style="display: none;">
-              &nbsp;
-              <!-- First button group -->
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf CTIO New Red List &nbsp; &nbsp; &nbsp;
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="javascript:void(0);">CD 32</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 21</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 274</a>
-                  <a class="dropdown-item" href="javascript:void(0);">F 56</a>
-                  <a class="dropdown-item" href="javascript:void(0);">F 110</a>
-                  <a class="dropdown-item" href="javascript:void(0);">H 600</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 377</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 745</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 1020</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 1788</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 2415</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 2511</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 3218</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 3864</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 4364</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 4816</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 6248</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 7379</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 7987</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 9239</a>
-                  <a class="dropdown-item" href="javascript:void(0);">L 9491</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 9491 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">L 9491 (red)</a>
                 </div>
               </div>
             </div>
@@ -1020,7 +993,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf IIDS List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafiids-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">40 ERIB</a>
                   <a class="dropdown-item" href="javascript:void(0);">AM CVS</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 7781</a>
@@ -1124,8 +1097,8 @@
                   <a class="dropdown-item" href="javascript:void(0);">SA 29130</a>
                   <a class="dropdown-item" href="javascript:void(0);">SAO 131065</a>
                   <a class="dropdown-item" href="javascript:void(0);">TON 573</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Wolf 1346</a>
                   <a class="dropdown-item" href="javascript:void(0);">Wolf 485a</a>
+                  <a class="dropdown-item" href="javascript:void(0);">Wolf 1346</a>
                 </div>
               </div>
             </div>
@@ -1136,7 +1109,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf IRS List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafirs-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">BD 082015</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 174708</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 253941</a>
@@ -1186,7 +1159,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf OKE List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafoke-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">BD 75325</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 284211</a>
                   <a class="dropdown-item" href="javascript:void(0);">Feige 34</a>
@@ -1213,7 +1186,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf Red List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafred-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">40 ERIB</a>
                   <a class="dropdown-item" href="javascript:void(0);">AM CVS</a>
                   <a class="dropdown-item" href="javascript:void(0);">BD 7781</a>
@@ -1275,7 +1248,7 @@
                   <a class="dropdown-item" href="javascript:void(0);">L 97030</a>
                   <a class="dropdown-item" href="javascript:void(0);">LDS 235b</a>
                   <a class="dropdown-item" href="javascript:void(0);">LDS 749b</a>
-                  <a class="dropdown-item" href="javascript:void(0);">LTT 1655</a>
+                  <a class="dropdown-item" href="javascript:void(0);">LFT 1655</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 4099</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 8702</a>
                   <a class="dropdown-item" href="javascript:void(0);">LTT 16294</a>
@@ -1295,89 +1268,67 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf 16 List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="iraf16-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">HD 15318</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 15318 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 15318 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 30739</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 30739 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 30739 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 74280</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 74280 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 74280 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 100889</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 100889 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 100889 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 114330</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 114330 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 114330 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 129956</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 129956 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 129956 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 188350</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 188350 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 188350 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 198001</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 198001 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 198001 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 214923</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 214923 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 214923 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HD 224926</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 224926 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HD 224926 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 718</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 718 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 718 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 1544</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 1544 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 1544 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 3454</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 3454 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 3454 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 4468</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 4468 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 4468 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 4963</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 4963 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 4963 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 5501</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 5501 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 5501 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 7596</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 7596 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 7596 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 7950</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 7950 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 7950 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 8634</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 8634 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 8634 (red)</a>
                   <a class="dropdown-item" href="javascript:void(0);">HR 9087</a>
-                </div>
-              </div>
-            </div>
-            <div id="iraf16blue-button" class="col-xs-4 stdlib" style="display: none;">
-              &nbsp;
-              <!-- First button group -->
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf 16 Blue List &nbsp; &nbsp; &nbsp;
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="javascript:void(0);">HD 15318</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 30739</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 74280</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 100889</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 114330</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 129956</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 188350</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 198001</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 214923</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 224926</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 718</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 1544</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 3454</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 4468</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 4963</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 5501</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 7596</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 7950</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 8634</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 9087</a>
-                </div>
-              </div>
-            </div>
-            <div id="iraf16red-button" class="col-xs-4 stdlib" style="display: none;">
-              &nbsp;
-              <!-- First button group -->
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf 16 Red List &nbsp; &nbsp; &nbsp;
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="javascript:void(0);">HD 15318</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 30739</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 74280</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 100889</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 114330</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 129956</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 188350</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 198001</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 214923</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HD 224926</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 718</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 1544</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 3454</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 4468</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 4963</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 5501</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 7596</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 7950</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 8634</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HR 9087</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 9087 (blue)</a>
+                  <a class="dropdown-item" href="javascript:void(0);">HR 9087 (red)</a>
                 </div>
               </div>
             </div>
@@ -1388,7 +1339,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf 50 List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="iraf50-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">BD 284211</a>
                   <a class="dropdown-item" href="javascript:void(0);">Cyg OB2 No.9</a>
                   <a class="dropdown-item" href="javascript:void(0);">EG 20</a>
@@ -1423,32 +1374,6 @@
                 </div>
               </div>
             </div>
-            <div id="iraf50red-button" class="col-xs-4 stdlib" style="display: none;">
-              &nbsp;
-             <!-- First button group -->
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  iraf 50 Red List &nbsp; &nbsp; &nbsp;
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
-                  <a class="dropdown-item" href="javascript:void(0);">BD 284211</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 71</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 139</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 158</a>
-                  <a class="dropdown-item" href="javascript:void(0);">EG 247</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Feige 34</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Feige 66</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Feige 67</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Feige 110</a>
-                  <a class="dropdown-item" href="javascript:void(0);">G 191 B2B</a>
-                  <a class="dropdown-item" href="javascript:void(0);">GD 140</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Hiltner 600</a>
-                  <a class="dropdown-item" href="javascript:void(0);">HZ 44</a>
-                  <a class="dropdown-item" href="javascript:void(0);">PG 0823546</a>
-                  <a class="dropdown-item" href="javascript:void(0);">Wolf 1346</a>
-                </div>
-              </div>
-            </div>
             <div id="irafhayes-button" class="col-xs-4 stdlib" style="display: none;">
               &nbsp;
              <!-- First button group -->
@@ -1456,7 +1381,7 @@
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   iraf Hayes List &nbsp; &nbsp; &nbsp;
                 </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+                <div id="irafhayes-dropdown-menu" class="dropdown-menu stdlist" aria-labelledby="btnGroupDrop3">
                   <a class="dropdown-item" href="javascript:void(0);">BD 284211</a>
                   <a class="dropdown-item" href="javascript:void(0);">Cyg OB2 No.9</a>
                   <a class="dropdown-item" href="javascript:void(0);">EG 42</a>
@@ -1503,6 +1428,44 @@
               </div>
             </div>
 
+            &nbsp;
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:showStandard()">Show Standard Spectrum</button>
+            </div>
+
+
+
+        </div>
+        <div id="standardSpectrum" style="height:600px"></div>
+
+        <div class="line"></div>
+
+        <div class="home">
+          <h2>Get Sensitivity Curve</h2>
+          <p>Generate sensitivity curve.</p>
+        </div>
+        <div class="row">
+          &nbsp; &nbsp; &nbsp;
+          <div class="col-xs-4">
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:getSensitivityCurve()">Generate Sensitivity Curve</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="line"></div>
+
+        <div class="home">
+          <h2>Flux Calibration</h2>
+          <p>Apply sensitivity curv to the extracted spectrum for flux calibration.</p>
+        </div>
+        <div class="row">
+          &nbsp; &nbsp; &nbsp;
+          <div class="col-xs-4">
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:fluxCalibrate()">Apply Sensitivity Curve</button>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1670,7 +1633,7 @@
     });
 
     // Select standard library to show standard star list
-    var stdlib_selected = 'OKE';
+    var stdlib_selected = 'esooke';
     $('#stdlibrary a').click(function() {
       stdlib_selected = $(this).text().toLowerCase().replace(/\s/g,'');
       $('.stdlib').hide();
@@ -1678,13 +1641,24 @@
       //console.log(stdlib_selected);
     });
 
+    // Select standard star from the dropdown menu
+    var std_selected = 'ffeige110';
+    var all_stdstar_dropdown = $('.stdlist');
+    for (var i=0; i<all_stdstar_dropdown.length; i++) {
+      $('#' + all_stdstar_dropdown[i]['id'] + ' a').click(function () {
+        std_selected = $(this).text();
+        //console.log(std_selected);
+        //console.log(standard_name[stdlib_selected][std_selected]);
+      });
+    }
+
     // Toggle magnitude/flux for flux calibration
-    var magflux = 'flux';
+    var magflux = 'f';
     $('#magfluxtype').on('click', function () {
       if($('#magflux').hasClass('active')) {
-        magflux = 'mag';
+        magflux = 'm';
       } else {
-        magflux = 'flux';
+        magflux = 'f';
       }
       //console.log(magflux);
     });
@@ -1927,51 +1901,65 @@
       });
     }
 
-    var standard_spec;
-    function showStandard(obstype) {
-
-      // plot the trace
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(function(){drawChart(standard_spec, obstype)});
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart(spec, obstype) {
-        
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        // assumes "word" is a string and "count" is a number
-        data.addColumn('number', 'wavelength');
-        data.addColumn('number', 'Source');
-
-        for (var i = 0; i < spec.length; i++) {
-            data.addRow([
-                i,
-                spec[i]['spec']
-            ]);
-        }
-
-        // Set chart options
-        var options = {'title': 'Standard Spectrum',
-                       'widht': 800,
-                       'height': 400,
-           'chartArea':{width:'80%',height:'90%'},
-           'explorer': {},
-           'vAxis': { 'title': 'ADU', 'logScale': true },
-           'hAxis': { 'title': 'Pixel (Spectral Direction)'}
-        };
-        if (obstype=='ScienceJS9') {
-          var chart = new google.visualization.LineChart(document.getElementsByClassName('scienceExtractedSpectrum')[0]);
-        }
-        if (obstype=='StandardJS9') {
-          var chart = new google.visualization.LineChart(document.getElementsByClassName('standardExtractedSpectrum')[0]);
-        }
-        chart.draw(data, options);
+    var stdlibname, sourcefilename, standard_spec, standard_wave;
+    function showStandard() {
+      stdlibname = stdlib_selected + 'stan';
+      if (stdlib_selected[0] == 'e') {
+        sourcefilename = magflux + standard_name[stdlib_selected][std_selected];
+      } else {
+        sourcefilename = standard_name[stdlib_selected][std_selected];
       }
+      document.getElementById('standardSpectrum').innerHTML = "";
+      standard_spec = [];
+      standard_wave = [];
+
+      console.log(stdlibname);
+      console.log(sourcefilename);
+      anychart.data.loadCsvFile(
+        path.join("../node_modules/ASPIRED/standards/", stdlibname, sourcefilename), function (data) {
+          // Remove everything after the first 2 columns
+          data = data.split('\n').map(function(line) {
+            // remove leading and trailing spaces
+            line = line.trim(); 
+            // convert any number of spaces and tabs into comma
+            line = line.split(/[ ,]+/).join(',');
+            line = line.split(/[\t,]+/).join(',');
+            // ignore lines starting with #, * and S
+            if ((line[0] != '#') & (line[0] != '*') & (line[0] != 'S')) {
+              // get each elements (columns) of the line
+              var columns = line.split(',');
+              // remove everything after the second column
+              columns.splice(2);
+              // save to the common variables
+              standard_wave.push(+columns[0]);
+              if ((magflux=='f') && (stdlib_selected[0] == 'i')) {
+                columns[1] = Math.pow(10., -(+columns[1] / 2.5)) * 3630.780548 / 3.34e4 / Math.pow(+columns[0], 2.) / 1e-16;
+                standard_spec.push(columns[1]);
+              } else {
+                standard_spec.push(+columns[1]);
+              }
+              return columns;
+            }
+          }).join('\n'); // join on newlines
+
+          //console.log(data)
+          // create chart from loaded data
+          var chart = anychart.line();
+          chart.line(data);
+          // set title
+          chart.title("Standard " + std_selected + " from " + stdlib_selected);
+          // set axis labels
+          if (magflux=='f') {
+            chart.yAxis().title('Flux / ergs/cm/cm/s/A * 10E16');
+          } else {
+            chart.yAxis().title('AB Magnitude');
+            chart.yScale().inverted(true);
+          }
+          chart.xAxis().title('Wavelength / Angstrom');
+          // draw chart
+          chart.container("standardSpectrum").draw();
+        }
+      );
     }
 
 
