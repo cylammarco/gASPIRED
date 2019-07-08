@@ -39,10 +39,10 @@ if optimal == 'optimal':
 else:
     optimal = False
 spec, sky, err = twodspec.ap_extract(
-	img, mu, apwidth=apwidth, trace_sigma=sigma, Saxis=Saxis, skysep=skysep,
-	skywidth=skywidth, skydeg=skydeg, optimal=optimal, cr_sigma=cr_sigma,
-	gain=gain, rn=rn, silence=True, display=False
-	)
+    img, mu, apwidth=apwidth, trace_sigma=sigma, Saxis=Saxis, skysep=skysep,
+    skywidth=skywidth, skydeg=skydeg, optimal=optimal, cr_sigma=cr_sigma,
+    gain=gain, rn=rn, silence=True, display=False
+    )
 
 # format into a json
 json.encoder.FLOAT_REPR = lambda o: format(o, '.3f')

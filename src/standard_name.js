@@ -342,7 +342,7 @@ var standard_name = {
     'HZ 43': 'hz43.dat',
     'HZ 44': 'hz44.dat',
     'Kopff 27': 'kopff27.dat',
-    'Hiltner 102 ': 'hiltner102.dat',
+    'Hiltner 102': 'hiltner102.dat',
     'Hiltner 600': 'hiltner600.dat',
     'L 8702': 'l8702.dat',
     'L 13633': 'l13633.dat',

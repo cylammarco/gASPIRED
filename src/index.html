@@ -288,7 +288,7 @@
                 <div class="input-group-prepend">
                   <button class="btn btn-primary" type="button" aria-pressed="false">Aperture Size</button>
                 </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='sciapwidth' style="width: 40px;">
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='8' id='sciapwidth' style="width: 40px;">
               </div>
             </div>
             &nbsp;
@@ -345,7 +345,7 @@
                 <div class="input-group-prepend">
                   <button class="btn btn-primary" type="button" aria-pressed="false">Sky Fit Degree</button>
                 </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='0' id='sciskydeg' style="width: 40px;">
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1' id='sciskydeg' style="width: 40px;">
               </div>
             </div>
             &nbsp;
@@ -534,7 +534,7 @@
                 <div class="input-group-prepend">
                   <button class="btn btn-primary" type="button" aria-pressed="false">Aperture Size</button>
                 </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='7' id='stdapwidth' style="width: 40px;">
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='8' id='stdapwidth' style="width: 40px;">
               </div>
             </div>
             &nbsp;
@@ -591,7 +591,7 @@
                 <div class="input-group-prepend">
                   <button class="btn btn-primary" type="button" aria-pressed="false">Sky Fit Degree</button>
                 </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='0' id='stdskydeg' style="width: 40px;">
+                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1' id='stdskydeg' style="width: 40px;">
               </div>
             </div>
             &nbsp;
@@ -1433,25 +1433,8 @@
               <button type="button" class="btn btn-primary" onclick="javascript:showStandard()">Show Standard Spectrum</button>
             </div>
 
-
-
         </div>
         <div id="standardSpectrum" style="height:600px"></div>
-
-        <div class="line"></div>
-
-        <div class="home">
-          <h2>Get Sensitivity Curve</h2>
-          <p>Generate sensitivity curve.</p>
-        </div>
-        <div class="row">
-          &nbsp; &nbsp; &nbsp;
-          <div class="col-xs-4">
-            <div>
-              <button type="button" class="btn btn-primary" onclick="javascript:getSensitivityCurve()">Generate Sensitivity Curve</button>
-            </div>
-          </div>
-        </div>
 
         <div class="line"></div>
 
@@ -1467,6 +1450,24 @@
             </div>
           </div>
         </div>
+        <div id="sensitivityPlot" style="height:400px"></div>
+        <div id="fluxCalibration" style="height:600px"></div>
+
+        <div class="line"></div>
+
+        <div class="home">
+          <h2>Save Calibrated Spectrum</h2>
+          <p>Save Calibrated Spectrum.</p>
+        </div>
+        <div class="row">
+          &nbsp; &nbsp; &nbsp;
+          <div class="col-xs-4">
+            <div>
+              <button type="button" class="btn btn-primary" onclick="javascript:saveSpec()">Save Calibrated Spectrum</button>
+            </div>
+          </div>
+        </div>
+
 
       </div>
 
@@ -1562,12 +1563,21 @@
     }
 
     function loadStandardFITS(obstype) {
-      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_hilt102.fits', {display: obstype});
+      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_hilt102.fits[1]', {display: obstype});
     }
 
     // Toggle display log/linear scale
-    $('#scale').click(function() {
-      if (JS9.GetScale().scale == 'log') {
+    $('#sciscale').click(function() {
+      if (JS9.GetScale('ScienceJS9').scale == 'log') {
+        JS9.SetScale('linear');
+      } else {
+        JS9.SetScale('log');
+      }
+    });
+
+    // Toggle display log/linear scale
+    $('#stdscale').click(function() {
+      if (JS9.GetScale('StandardJS9').scale == 'log') {
         JS9.SetScale('linear');
       } else {
         JS9.SetScale('log');
@@ -1638,7 +1648,7 @@
       stdlib_selected = $(this).text().toLowerCase().replace(/\s/g,'');
       $('.stdlib').hide();
       $('#' + stdlib_selected + '-button').show();
-      //console.log(stdlib_selected);
+      console.log(stdlib_selected);
     });
 
     // Select standard star from the dropdown menu
@@ -1647,8 +1657,8 @@
     for (var i=0; i<all_stdstar_dropdown.length; i++) {
       $('#' + all_stdstar_dropdown[i]['id'] + ' a').click(function () {
         std_selected = $(this).text();
-        //console.log(std_selected);
-        //console.log(standard_name[stdlib_selected][std_selected]);
+        console.log(std_selected);
+        console.log(standard_name[stdlib_selected][std_selected]);
       });
     }
 
@@ -1770,8 +1780,10 @@
       });
     }
 
-    var science_spec;
-    var standard_spec;
+    var science_extracted_spec,
+        standard_extracted_spec;
+    var snr_sci = [];
+
     function specExtract(obstype) {
       var spectrum = JS9.GetImage({display: obstype}).raw;
       var spec_width = spectrum.header.NAXIS1,
@@ -1808,9 +1820,14 @@
       let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise]});
 
       if (obstype == 'ScienceJS9') {
+        // Clear plot
+        document.getElementById('scienceExtractedSpectrum').innerHTML = "";
+        science_extracted_spec = null;
         shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myScienceTrace}));
       } else {
-        //console.log(myStandardTrace);
+        // Clear plot
+        document.getElementById('standardExtractedSpectrum').innerHTML = "";
+        standard_extracted_spec = null;
         shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myStandardTrace}));
       }      
       // append the stdout messages
@@ -1826,9 +1843,9 @@
 
         spec_temp = JSON.parse(spec_temp);
         if (obstype == 'ScienceJS9') {
-          science_spec = spec_temp;
+          science_extracted_spec = spec_temp;
         } else {
-          standard_spec = spec_temp;
+          standard_extracted_spec = spec_temp;
         }
 
         var target = [],
@@ -1839,6 +1856,9 @@
           target.push({'x': i, 'value': spec_temp[i]['spec']});
           sky.push({'x': i, 'value': spec_temp[i]['sky']});
           sigma.push({'x': i, 'value': spec_temp[i]['err']});
+          if (obstype == 'ScienceJS9') {
+            snr_sci.push(spec_temp[i]['spec']/spec_temp[i]['err']);
+          }
         }
 
         var chartjson = {
@@ -1888,7 +1908,6 @@
           }
         };
 
-
         var chart = anychart.fromJson(chartjson);
 
       if (obstype == 'ScienceJS9') {
@@ -1909,12 +1928,14 @@
       } else {
         sourcefilename = standard_name[stdlib_selected][std_selected];
       }
+
+      // Clear plot
       document.getElementById('standardSpectrum').innerHTML = "";
       standard_spec = [];
       standard_wave = [];
 
-      console.log(stdlibname);
-      console.log(sourcefilename);
+      //console.log(stdlibname);
+      //console.log(sourcefilename);
       anychart.data.loadCsvFile(
         path.join("../node_modules/ASPIRED/standards/", stdlibname, sourcefilename), function (data) {
           // Remove everything after the first 2 columns
@@ -1960,6 +1981,171 @@
           chart.container("standardSpectrum").draw();
         }
       );
+    }
+
+
+    var exp_time = 10.;
+    var sensitivity = [],
+        calibrated_spec = [],
+        error;
+    var standard_wave,
+        science_wave,
+        science_spec_flux,
+        standard_spec_flux;
+
+    function fluxCalibrate() {
+      // Clear plot
+      document.getElementById('fluxCalibration').innerHTML = "";
+      document.getElementById('sensitivityPlot').innerHTML = "";
+
+      error = [];
+      standard_wave = [];
+      science_wave = [];
+      science_spec_flux = [];
+      standard_spec_flux = [];
+
+      for (var i = 0; i < science_extracted_spec.length; i++) {
+        wave = 4020. + i*9.2
+        science_wave.push(wave);
+        standard_wave.push(wave);
+        science_spec_flux.push(science_extracted_spec[i]['spec']);
+        standard_spec_flux.push(standard_extracted_spec[i]['spec']);
+      }
+      //console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise);
+      let shell = new pyshell(path.join(__dirname, 'fluxCalibrate.py'), { mode: 'text', args: [sourcefilename.split('.')[0], stdlibname.split('stan')[0],exp_time]});
+
+      shell.send(JSON.stringify({
+        "spec_std": science_spec_flux,
+        "wave_std": science_wave,
+        "spec_sci": standard_spec_flux,
+        "wave_sci": standard_wave
+      }));
+      var spec_temp = '';
+      // append the stdout messages
+      shell.on('message', function(message) {
+        spec_temp += message;
+        //console.log(message);
+      });
+      
+      // convert into JSON object when all messages are received
+      shell.end(function(err) {
+        if (err) console.log(err);
+        //console.log(spec_temp);
+
+        spec_temp = JSON.parse(spec_temp);
+
+        for (var i = 0; i < spec_temp.length; i++) {
+          sensitivity.push({'x': science_wave[i], 'value': spec_temp[i]['sensitivity'] * 1e16});
+          calibrated_spec.push({'x': science_wave[i], 'value': spec_temp[i]['calibrated_spec']});
+          error.push({'x': science_wave[i], 'value': spec_temp[i]['calibrated_spec'] / snr_sci[i]});
+        }
+
+        var chartjson_sens = {
+          "chart": {
+            "height": '400px',
+            // set chart type
+            "type": "line",
+            // insert data
+            "series":[{
+                "seriesType": "line",
+                "name": "Sensitivity Curve",
+                "data": sensitivity
+            }],
+            // x axes settings
+            "xAxes": [{               // settings for default x axis
+              "orientation": "bottom",   // set axis position
+              "title":{               // settings for axis title
+                "enabled": true,      //  title
+                "text": "Wavelength / A"
+              }
+            }],
+
+            // y axes settings
+            "yAxes": [{               // settings for default y axis
+              "orientation": "left", // set axis position
+              "title":{               // settings for axis title
+                "enabled": true,      //  title
+                "text": "ADU / Flux ratio ( * 1E+16)"
+              }
+            }],
+
+            // x scale settings
+            "xScale": {
+              "type": "linear",
+            },
+
+            // y scale settings
+            "yScale": {
+              "minimum": 0.0,
+            }
+
+          }
+        };
+
+        var chartjson = {
+          "chart": {
+            "height": '600px',
+            // set chart type
+            "type": "line",
+            // insert data
+            "series":[
+              {
+                "seriesType": "line",
+                "name": "Calibrated Spectrum",
+                "data": calibrated_spec
+              }, {
+                "seriesType": "line",
+                "name": "Uncertainty",
+                "data": error
+              }
+            ],
+            // x axes settings
+            "xAxes": [{               // settings for default x axis
+              "orientation": "bottom",   // set axis position
+              "title":{               // settings for axis title
+                "enabled": true,      //  title
+                "text": "Wavelength / A"
+              }
+            }],
+
+            // y axes settings
+            "yAxes": [{               // settings for default y axis
+              "orientation": "left", // set axis position
+              "title":{               // settings for axis title
+                "enabled": true,      //  title
+                "text": "Flux / (erg / cm / cm / s / A * 1E+16)"
+              }
+            }],
+
+            // x scale settings
+            "xScale": {
+              "type": "linear",
+            },
+
+            // y scale settings
+            "yScale": {
+              "minimum": 0.0,
+            }
+
+          }
+        };
+
+        var chart = anychart.fromJson(chartjson);
+        var chart_sens = anychart.fromJson(chartjson_sens);
+
+        chart.container("fluxCalibration");
+        chart.title("Extracted Spectrum");
+        chart.draw();
+        chart.xScroller(true);
+        chart.yScroller(true);
+
+        chart_sens.container("sensitivityPlot");
+        chart_sens.title("Sensitivity Curve");
+        chart_sens.draw();
+        chart_sens.xScroller(true);
+        chart_sens.yScroller(true);
+
+      });
     }
 
 
