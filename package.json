@@ -61,7 +61,8 @@
     "jquery": "^3.4.1",
     "js9": "git+https://github.com/ericmandel/js9.git",
     "popper.js": "^1.15.0",
-    "python-shell": "^1.0.7"
+    "python-shell": "^1.0.7",
+    "SpectRes": "git://github.com/cylammarco/SpectRes.git"
   },
   "devDependencies": {
     "@hapi/cryptiles": "^4.2.0",

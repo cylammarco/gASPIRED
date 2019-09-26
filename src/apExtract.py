@@ -44,6 +44,11 @@ spec, sky, err = twodspec.ap_extract(
     gain=gain, rn=rn, silence=True, display=False
     )
 
+mask = (np.isnan(spec) | np.isnan(sky) | np.isnan(err))
+spec[mask] = 0.
+sky[mask] = 0.
+err[mask] = 0.
+
 # format into a json
 json.encoder.FLOAT_REPR = lambda o: format(o, '.3f')
 if Saxis == 1:

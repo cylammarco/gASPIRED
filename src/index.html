@@ -264,7 +264,7 @@
               <button type="button" class="btn btn-primary sciaptrace-auto" onclick="javascript:specTrace('auto', 'ScienceJS9')">Identify Brightest Spectrum</button>
               <button type="button" class="btn btn-primary sciaptrace-manual" style="display: none;" onclick="javascript:addBox('ScienceJS9')">Mark Spectrum</button>
               <button type="button" class="btn btn-primary sciaptrace-manual" style="display: none;" onclick="javascript:specTrace('manual', 'ScienceJS9')">Identify Spectrum</button>
-              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions('ScienceJS9')">Clear All</button>
+              <button type="button" class="btn btn-danger" onclick="javascript:JS9.RemoveRegions({'display': 'ScienceJS9'})">Clear All</button>
             </div>
           </div>
 
@@ -2015,10 +2015,10 @@
       let shell = new pyshell(path.join(__dirname, 'fluxCalibrate.py'), { mode: 'text', args: [sourcefilename.split('.')[0], stdlibname.split('stan')[0],exp_time]});
 
       shell.send(JSON.stringify({
-        "spec_std": science_spec_flux,
-        "wave_std": science_wave,
-        "spec_sci": standard_spec_flux,
-        "wave_sci": standard_wave
+        "spec_std": standard_spec_flux,
+        "wave_std": standard_wave,
+        "spec_sci": science_spec_flux,
+        "wave_sci": science_wave
       }));
       var spec_temp = '';
       // append the stdout messages
