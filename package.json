@@ -51,31 +51,33 @@
     }
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.9.0",
-    "ASPIRED": "git://github.com/cylammarco/ASPIRED.git",
-    "anychart": "^8.6.0",
-    "bootstrap": "^4.3.1",
-    "electron-compile": "^6.4.4",
-    "electron-squirrel-startup": "^1.0.0",
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "ASPIRED": "git://github.com/cylammarco/ASPIRED.git#plotly",
+    "SpectRes": "git://github.com/cylammarco/SpectRes.git",
+    "bootstrap": "^4.4.1",
     "fix-path": "^2.1.0",
     "jquery": "^3.4.1",
     "js9": "git+https://github.com/ericmandel/js9.git",
-    "popper.js": "^1.15.0",
-    "python-shell": "^1.0.7",
-    "SpectRes": "git://github.com/cylammarco/SpectRes.git"
+    "plotly.js": "^1.51.2",
+    "popper.js": "^1.16.0",
+    "python-shell": "^1.0.8"
   },
   "devDependencies": {
-    "@hapi/cryptiles": "^4.2.0",
-    "@hapi/hoek": "^7.1.0",
+    "@hapi/cryptiles": "^4.2.1",
+    "@hapi/hoek": "^8.5.0",
+    "acorn": "^7.1.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "electron-compile": "^6.4.4",
     "electron-forge": "^5.2.4",
     "electron-prebuilt-compile": "4.0.0",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0"
   }
 }

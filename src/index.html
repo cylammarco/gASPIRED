@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./heatmap.css">
     <link rel="stylesheet" href="../node_modules/js9/js9support.css">
     <link rel="stylesheet" href="../node_modules/js9/js9.css">
 
@@ -36,7 +35,7 @@
   <script type="text/javascript" src="../node_modules/js9/js9.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9plugins.js"></script>
   <script type="text/javascript" src="../node_modules/js9/js9usermenus.js"></script>
-  <script type="text/javascript" src="../node_modules/anychart/dist/js/anychart-bundle.min.js"></script>
+  <script type="text/javascript" src="../node_modules/plotly.js/dist/plotly.min.js"></script>
 </head>
 
 <body>
@@ -300,15 +299,6 @@
                 <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1.0' id='scigain' style="width: 50px;">
               </div>
             </div>
-            &nbsp;
-            <div class="col-xs-4">
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <button class="btn btn-primary" type="button" aria-pressed="false">Read Noise</button>
-                </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5.0' id='scireadnoise' style="width: 50px;">
-              </div>
-            </div>
 
             &nbsp;
             <div class="col-xs-6">
@@ -357,7 +347,7 @@
         <div class="line"></div>
         <h2>Extracted SCIENCE Spectrum</h2>
         <br>
-        <div id="scienceExtractedSpectrum" style="height:600px"></div>
+        <div id="scienceExtractedSpectrum" style="height:800px"></div>
         <div class="line"></div>
 
       </div>
@@ -520,10 +510,10 @@
             &nbsp; &nbsp; &nbsp;
             <div class="col-xs-3">
               <div id='stdextracttype' class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary active" id='stdoptimal'>
+                <label class="btn btn-secondary" id='stdoptimal'>
                   <input type="radio"> Optimal
                 </label>
-                <label class="btn btn-secondary">
+                <label class="btn btn-secondary active">
                   <input type="radio"> Tophat
                 </label>
               </div>
@@ -544,15 +534,6 @@
                   <button class="btn btn-primary" type="button" aria-pressed="false">Gain</button>
                 </div>
                 <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='1.0' id='stdgain' style="width: 50px;">
-              </div>
-            </div>
-            &nbsp;
-            <div class="col-xs-4">
-              <div class="input-group mb-2">
-                <div class="input-group-prepend">
-                  <button class="btn btn-primary" type="button" aria-pressed="false">Read Noise</button>
-                </div>
-                <input type="value" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" value='5.0' id='stdreadnoise' style="width: 50px;">
               </div>
             </div>
 
@@ -603,7 +584,8 @@
         <div class="line"></div>
         <h2>Extracted STANDARD Spectrum</h2>
         <br>
-        <div id="standardExtractedSpectrum" style="height:600px"></div>
+        <div id="standardExtractedSpectrum" style="height:800px"></div>
+
         <div class="line"></div>
         <div class="fluxCalibration">
 
@@ -1434,7 +1416,7 @@
             </div>
 
         </div>
-        <div id="standardSpectrum" style="height:600px"></div>
+        <div id="standardSpectrum" style="height:800px"></div>
 
         <div class="line"></div>
 
@@ -1450,8 +1432,9 @@
             </div>
           </div>
         </div>
-        <div id="sensitivityPlot" style="height:400px"></div>
-        <div id="fluxCalibration" style="height:600px"></div>
+        <div id="sensitivityPlot" style="height:800px"></div>
+        <div id="fluxCalibrationStandard" style="height:800px"></div>
+        <div id="fluxCalibrationScience" style="height:800px"></div>
 
         <div class="line"></div>
 
@@ -1559,11 +1542,11 @@
     }
 
     function loadScienceFITS(obstype) {
-      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_flattened.fits', {display: obstype});
+      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/v_e_20180810_12_1_0_0.fits.gz', {display: obstype});
     }
 
     function loadStandardFITS(obstype) {
-      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/example_sprat_hilt102.fits[1]', {display: obstype});
+      JS9.Load('http://www.astro.ljmu.ac.uk/~ariclam/tempfile/v_s_20180810_27_1_0_0.fits.gz', {display: obstype});
     }
 
     // Toggle display log/linear scale
@@ -1618,12 +1601,12 @@
     });
 
     // Toggle optimal/tophat tracing
-    var stdoptimal = 'optimal';
+    var stdoptimal = 'tophat';
     $('#stdextracttype').on('click', function () {
       if($('#stdoptimal').hasClass('active')) {
-        stdoptimal = 'tophat';
-      } else {
         stdoptimal = 'optimal';
+      } else {
+        stdoptimal = 'tophat';
       }
       //console.log(stdoptimal);
     });
@@ -1663,12 +1646,12 @@
     }
 
     // Toggle magnitude/flux for flux calibration
-    var magflux = 'f';
+    var magflux = 'flux';
     $('#magfluxtype').on('click', function () {
       if($('#magflux').hasClass('active')) {
-        magflux = 'm';
+        magflux = 'mag';
       } else {
-        magflux = 'f';
+        magflux = 'flux';
       }
       //console.log(magflux);
     });
@@ -1737,13 +1720,13 @@
         
         offset += spec_low;
 
-        var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [spec_low, spec_high, saxis, fittype, order]});
+        var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [obstype, spec_low, spec_high, saxis, fittype, order]});
         shell.send(JSON.stringify(spectrum));
       } else {
         if (saxis == 1) {
-          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [0, spec_height, saxis, fittype, order]});
+          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [obstype, 0, spec_height, saxis, fittype, order]});
         } else {
-          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [0, spec_width, saxis, fittype, order]});
+          var shell = new pyshell(path.join(__dirname, 'apIdentify.py'), { mode: 'text', args: [obstype, 0, spec_width, saxis, fittype, order]});
         }
 
         shell.send(JSON.stringify(spectrum));
@@ -1758,6 +1741,7 @@
       // convert into JSON object when all messages are received
       shell.end(function(err) {
         var myTrace;
+        //console.log(trace);
         if (err) console.log(err);
         if (obstype == 'ScienceJS9') {
           myScienceTrace = JSON.parse(trace);
@@ -1790,45 +1774,40 @@
           spec_height = spectrum.header.NAXIS2,
           spec_temp = '';
 
-      var apwidth, gain, readnoise, crsigma, skysep, skywidth, skydeg, saxis, optimal;
+      var apwidth, gain, crsigma, skysep, skywidth, skydeg, saxis, optimal;
 
       if (obstype == 'ScienceJS9') {
         apwidth = $('#sciapwidth')[0].value;
         gain = $('#scigain')[0].value;
-        readnoise = $('#scireadnoise')[0].value;
         crsigma = $('#scicrsigma')[0].value;
         skysep = $('#sciskysep')[0].value;
         skywidth = $('#sciskywidth')[0].value;
         skydeg = $('#sciskydeg')[0].value;
-        saxis = scisaxis;
         optimal = scioptimal;
       }
 
       if (obstype == 'StandardJS9') {
         apwidth = $('#stdapwidth')[0].value;
         gain = $('#stdgain')[0].value;
-        readnoise = $('#stdreadnoise')[0].value;
         crsigma = $('#stdcrsigma')[0].value;
         skysep = $('#stdskysep')[0].value;
         skywidth = $('#stdskywidth')[0].value;
         skydeg = $('#stdskydeg')[0].value;
-        saxis = stdsaxis;
         optimal = stdoptimal;
       }
 
-      //console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise);
-      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise]});
+      //console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain);
+      let shell = new pyshell(path.join(__dirname, 'apExtract.py'), { mode: 'text', args: [obstype, apwidth, skysep, skywidth, skydeg, optimal, crsigma, gain]});
 
       if (obstype == 'ScienceJS9') {
         // Clear plot
         document.getElementById('scienceExtractedSpectrum').innerHTML = "";
         science_extracted_spec = null;
-        shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myScienceTrace}));
-      } else {
+      }
+      if (obstype == 'StandardJS9') {
         // Clear plot
         document.getElementById('standardExtractedSpectrum').innerHTML = "";
         standard_extracted_spec = null;
-        shell.send(JSON.stringify({"spectrum": spectrum, "myTrace": myStandardTrace}));
       }      
       // append the stdout messages
       shell.on('message', function(message) {
@@ -1838,189 +1817,33 @@
       
       // convert into JSON object when all messages are received
       shell.end(function(err) {
-        if (err) console.log(err);
         //console.log(spec_temp);
+        if (err) console.log(err);
 
-        spec_temp = JSON.parse(spec_temp);
         if (obstype == 'ScienceJS9') {
-          science_extracted_spec = spec_temp;
-        } else {
-          standard_extracted_spec = spec_temp;
+          sci_spec = JSON.parse(spec_temp);
+          //console.log(sci_spec.layout);
+          Plotly.newPlot("scienceExtractedSpectrum", sci_spec.data, sci_spec.layout);
         }
-
-        var target = [],
-            sky = [],
-            sigma = [];
-
-        for (var i = 0; i < spec_temp.length; i++) {
-          target.push({'x': i, 'value': spec_temp[i]['spec']});
-          sky.push({'x': i, 'value': spec_temp[i]['sky']});
-          sigma.push({'x': i, 'value': spec_temp[i]['err']});
-          if (obstype == 'ScienceJS9') {
-            snr_sci.push(spec_temp[i]['spec']/spec_temp[i]['err']);
-          }
+        if (obstype == 'StandardJS9') {
+          std_spec = JSON.parse(spec_temp);
+          //console.log(std_spec.layout);
+          Plotly.newPlot("standardExtractedSpectrum", std_spec.data, std_spec.layout);
         }
-
-        var chartjson = {
-          "chart": {
-            "height": '600px',
-            // set chart type
-            "type": "line",
-            // insert data
-            "series":[
-              {
-                "seriesType": "line",
-                "name": "Source",
-                "data": target
-              }, {
-                "seriesType": "line",
-                "name": "Sky Background",
-                "data": sky
-              }, {
-                "seriesType": "line",
-                "name": "Uncertainty",
-                "data": sigma
-              }
-            ],
-            // x axes settings
-            "xAxes": [{               // settings for default x axis
-              "orientation": "bottom",   // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "Pixel"
-              }
-            }],
-
-            // y axes settings
-            "yAxes": [{               // settings for default y axis
-              "orientation": "left", // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "ADU"
-              }
-            }],
-
-            // y scale settings
-            "yScale": {
-              "type": "log",
-              "minimum": 10,
-            }
-          }
-        };
-
-        var chart = anychart.fromJson(chartjson);
-
-      if (obstype == 'ScienceJS9') {
-        chart.container("scienceExtractedSpectrum");
-      } else {
-        chart.container("standardExtractedSpectrum");
-      }
-        chart.title("Extracted Spectrum");
-        chart.draw();
       });
     }
 
-    var stdlibname, sourcefilename, standard_spec, standard_wave;
+    var standard_spec, standard_wave;
     function showStandard() {
-      stdlibname = stdlib_selected + 'stan';
-      if (stdlib_selected[0] == 'e') {
-        sourcefilename = magflux + standard_name[stdlib_selected][std_selected];
-      } else {
-        sourcefilename = standard_name[stdlib_selected][std_selected];
-      }
+      var spec_temp = '';
 
       // Clear plot
       document.getElementById('standardSpectrum').innerHTML = "";
       standard_spec = [];
       standard_wave = [];
 
-      //console.log(stdlibname);
-      //console.log(sourcefilename);
-      anychart.data.loadCsvFile(
-        path.join("../node_modules/ASPIRED/standards/", stdlibname, sourcefilename), function (data) {
-          // Remove everything after the first 2 columns
-          data = data.split('\n').map(function(line) {
-            // remove leading and trailing spaces
-            line = line.trim(); 
-            // convert any number of spaces and tabs into comma
-            line = line.split(/[ ,]+/).join(',');
-            line = line.split(/[\t,]+/).join(',');
-            // ignore lines starting with #, * and S
-            if ((line[0] != '#') & (line[0] != '*') & (line[0] != 'S')) {
-              // get each elements (columns) of the line
-              var columns = line.split(',');
-              // remove everything after the second column
-              columns.splice(2);
-              // save to the common variables
-              standard_wave.push(+columns[0]);
-              if ((magflux=='f') && (stdlib_selected[0] == 'i')) {
-                columns[1] = Math.pow(10., -(+columns[1] / 2.5)) * 3630.780548 / 3.34e4 / Math.pow(+columns[0], 2.) / 1e-16;
-                standard_spec.push(columns[1]);
-              } else {
-                standard_spec.push(+columns[1]);
-              }
-              return columns;
-            }
-          }).join('\n'); // join on newlines
-
-          //console.log(data)
-          // create chart from loaded data
-          var chart = anychart.line();
-          chart.line(data);
-          // set title
-          chart.title("Standard " + std_selected + " from " + stdlib_selected);
-          // set axis labels
-          if (magflux=='f') {
-            chart.yAxis().title('Flux / ergs/cm/cm/s/A * 10E16');
-          } else {
-            chart.yAxis().title('AB Magnitude');
-            chart.yScale().inverted(true);
-          }
-          chart.xAxis().title('Wavelength / Angstrom');
-          // draw chart
-          chart.container("standardSpectrum").draw();
-        }
-      );
-    }
-
-
-    var exp_time = 10.;
-    var sensitivity = [],
-        calibrated_spec = [],
-        error;
-    var standard_wave,
-        science_wave,
-        science_spec_flux,
-        standard_spec_flux;
-
-    function fluxCalibrate() {
-      // Clear plot
-      document.getElementById('fluxCalibration').innerHTML = "";
-      document.getElementById('sensitivityPlot').innerHTML = "";
-
-      error = [];
-      standard_wave = [];
-      science_wave = [];
-      science_spec_flux = [];
-      standard_spec_flux = [];
-
-      for (var i = 0; i < science_extracted_spec.length; i++) {
-        wave = 4020. + i*9.2
-        science_wave.push(wave);
-        standard_wave.push(wave);
-        science_spec_flux.push(science_extracted_spec[i]['spec']);
-        standard_spec_flux.push(standard_extracted_spec[i]['spec']);
-      }
-      //console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain, readnoise);
-      let shell = new pyshell(path.join(__dirname, 'fluxCalibrate.py'), { mode: 'text', args: [sourcefilename.split('.')[0], stdlibname.split('stan')[0],exp_time]});
-
-      shell.send(JSON.stringify({
-        "spec_std": standard_spec_flux,
-        "wave_std": standard_wave,
-        "spec_sci": science_spec_flux,
-        "wave_sci": science_wave
-      }));
-      var spec_temp = '';
+      let shell = new pyshell(path.join(__dirname, 'inspectStandard.py'), { mode: 'text', args: [standard_name[stdlib_selected][std_selected], stdlib_selected, magflux]});
+      
       // append the stdout messages
       shell.on('message', function(message) {
         spec_temp += message;
@@ -2030,120 +1853,67 @@
       // convert into JSON object when all messages are received
       shell.end(function(err) {
         if (err) console.log(err);
-        //console.log(spec_temp);
+        std_spec = JSON.parse(spec_temp);
+        //console.log(std_spec.layout);
+        Plotly.newPlot("standardSpectrum", std_spec.data, std_spec.layout);
+        standard_wave = std_spec.data[0]['x'];
+        standard_spec = std_spec.data[0]['y'];
+        //console.log(standard_wave);
+        //console.log(standard_spec);
+      });
+    }
 
-        spec_temp = JSON.parse(spec_temp);
+    var sense_and_spec_temp = '',
+        sense_curve,
+        sense_wave,
+        sense_spec,
+        science_reduced,
+        science_reduced_wave,
+        science_reduced_spec,
+        standard_reduced,
+        standard_reduced_wave,
+        standard_reduced_spec;
 
-        for (var i = 0; i < spec_temp.length; i++) {
-          sensitivity.push({'x': science_wave[i], 'value': spec_temp[i]['sensitivity'] * 1e16});
-          calibrated_spec.push({'x': science_wave[i], 'value': spec_temp[i]['calibrated_spec']});
-          error.push({'x': science_wave[i], 'value': spec_temp[i]['calibrated_spec'] / snr_sci[i]});
-        }
+    function fluxCalibrate() {
+      // Clear plot
+      document.getElementById('sensitivityPlot').innerHTML = "";
+      document.getElementById('fluxCalibrationStandard').innerHTML = "";
+      document.getElementById('fluxCalibrationScience').innerHTML = "";
 
-        var chartjson_sens = {
-          "chart": {
-            "height": '400px',
-            // set chart type
-            "type": "line",
-            // insert data
-            "series":[{
-                "seriesType": "line",
-                "name": "Sensitivity Curve",
-                "data": sensitivity
-            }],
-            // x axes settings
-            "xAxes": [{               // settings for default x axis
-              "orientation": "bottom",   // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "Wavelength / A"
-              }
-            }],
+      //console.log(apwidth, saxis, skysep, skywidth, skydeg, optimal, crsigma, gain);
+      let shell = new pyshell(path.join(__dirname, 'fluxCalibrate.py'), { mode: 'text'});
 
-            // y axes settings
-            "yAxes": [{               // settings for default y axis
-              "orientation": "left", // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "ADU / Flux ratio ( * 1E+16)"
-              }
-            }],
+      // append the stdout messages
+      shell.on('message', function(message) {
+        sense_and_spec_temp += message;
+        //console.log(message);
+      });
+      
+      // convert into JSON object when all messages are received
+      shell.end(function(err) {
+        if (err) console.log(err);
+        sense_and_spec_temp = JSON.parse(sense_and_spec_temp);
+        console.log(sense_and_spec_temp);
+        sense_curve = sense_and_spec_temp['sense_curve'];
+        science_reduced = sense_and_spec_temp['science_reduced'];
+        standard_reduced = sense_and_spec_temp['standard_reduced'];
 
-            // x scale settings
-            "xScale": {
-              "type": "linear",
-            },
+        sense_curve = JSON.parse(sense_curve);
+        science_reduced = JSON.parse(science_reduced);
+        standard_reduced = JSON.parse(standard_reduced);
 
-            // y scale settings
-            "yScale": {
-              "minimum": 0.0,
-            }
+        //console.log(std_spec.layout);
+        Plotly.newPlot('sensitivityPlot', sense_curve.data, sense_curve.layout);
+        sense_wave = sense_curve.data[0]['x'];
+        sense_spec = sense_curve.data[0]['y'];
 
-          }
-        };
+        Plotly.newPlot('fluxCalibrationStandard', standard_reduced.data, standard_reduced.layout);
+        standard_reduced_wave = standard_reduced.data[0]['x'];
+        standard_reduced_spec = standard_reduced.data[0]['y'];
 
-        var chartjson = {
-          "chart": {
-            "height": '600px',
-            // set chart type
-            "type": "line",
-            // insert data
-            "series":[
-              {
-                "seriesType": "line",
-                "name": "Calibrated Spectrum",
-                "data": calibrated_spec
-              }, {
-                "seriesType": "line",
-                "name": "Uncertainty",
-                "data": error
-              }
-            ],
-            // x axes settings
-            "xAxes": [{               // settings for default x axis
-              "orientation": "bottom",   // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "Wavelength / A"
-              }
-            }],
-
-            // y axes settings
-            "yAxes": [{               // settings for default y axis
-              "orientation": "left", // set axis position
-              "title":{               // settings for axis title
-                "enabled": true,      //  title
-                "text": "Flux / (erg / cm / cm / s / A * 1E+16)"
-              }
-            }],
-
-            // x scale settings
-            "xScale": {
-              "type": "linear",
-            },
-
-            // y scale settings
-            "yScale": {
-              "minimum": 0.0,
-            }
-
-          }
-        };
-
-        var chart = anychart.fromJson(chartjson);
-        var chart_sens = anychart.fromJson(chartjson_sens);
-
-        chart.container("fluxCalibration");
-        chart.title("Extracted Spectrum");
-        chart.draw();
-        chart.xScroller(true);
-        chart.yScroller(true);
-
-        chart_sens.container("sensitivityPlot");
-        chart_sens.title("Sensitivity Curve");
-        chart_sens.draw();
-        chart_sens.xScroller(true);
-        chart_sens.yScroller(true);
+        Plotly.newPlot('fluxCalibrationScience', science_reduced.data, science_reduced.layout);
+        science_reduced_wave = science_reduced.data[0]['x'];
+        science_reduced_spec = science_reduced.data[0]['y'];
 
       });
     }

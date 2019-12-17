@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron';
 const path = require('path')
 const url = require('url')
 const fixPath = require('fix-path');
+const pyshell =  require('python-shell').PythonShell;
 
 fixPath();
 
@@ -20,7 +21,10 @@ const createWindow = () => {
     width: 1440,
     height: 1024,
     backgroundColor: "#111",
-    show: false
+    show: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   // and load the index.html of the app.
@@ -44,6 +48,9 @@ const createWindow = () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  var shell = new pyshell(path.join(__dirname, 'server.py'));
+
 };
 
 // This method will be called when Electron has finished
@@ -60,6 +67,7 @@ app.on('window-all-closed', () => {
     // Clear cache
     //mainWindow.webContents.session.clearCache();
     app.quit();
+    shell.end();
   //}
 });
 

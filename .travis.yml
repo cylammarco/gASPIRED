@@ -37,4 +37,4 @@ install:
   - npm update
 
 script:
-  - electron-forge make --target=linux,darwin,win32
+  - electron-forge make --platform=linux,darwin,win32

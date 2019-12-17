@@ -8,8 +8,12 @@ PORT = 54321              # Arbitrary non-privileged port
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-args = []
-data = pickle.dumps(['fluxCalibrate', args])
+target_name = sys.argv[1]
+group_name = sys.argv[2]
+ftype = sys.argv[3]
+
+args = [target_name, group_name, ftype]
+data = pickle.dumps(['inspectStandard', args])
 
 s.sendall(data)
 s.close()
