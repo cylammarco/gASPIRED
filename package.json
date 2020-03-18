@@ -65,7 +65,7 @@
     "SpectRes": "git://github.com/cylammarco/SpectRes.git"
   },
   "devDependencies": {
-    "@hapi/cryptiles": "^4.2.0",
+    "@hapi/cryptiles": "^5.0.0",
     "@hapi/hoek": "^9.0.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
